@@ -18,7 +18,7 @@ class PyGoogleCalc(unittest.TestCase):
                            See https://sites.google.com/a/chromium.org/chromedriver/home
                            for more information or install Firefox.
                         '''
-           assert 'ChromDriver' in os.environ, assertInfo
+           assert 'ChromeDriver' in os.environ, assertInfo
            cls.driver = webdriver.Chrome(os.environ['ChromeDriver'])
         cls.driver.get('https://www.google.com')
 
