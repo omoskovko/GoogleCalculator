@@ -1,9 +1,9 @@
 import os
+import inspect
 from selenium import webdriver
 import unittest
 #Project libs
-from common import CalcPObject
-from data import CalcData
+from . import CalcPObject, CalcData
 
 class PyGoogleCalc(unittest.TestCase):
     @classmethod
@@ -58,12 +58,11 @@ class PyGoogleCalc(unittest.TestCase):
         self.assertEqual(check_res, ResStr)
 
     def tearDown(self):
-        self.driver.get_screenshot_as_file('{0}/{1}.png'.format('output.png', self.tCaseName))
+        mainFileName = inspect.stack()[0][1]
+        outPngFile = os.path.abspath(os.path.join(os.path.dirname(mainFileName), 
+                                     'output.png', self.tCaseName+'.png'))
+        self.driver.get_screenshot_as_file(outPngFile)
 
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
-
-if __name__ == '__main__':
-   suite = unittest.TestLoader().loadTestsFromTestCase(PyGoogleCalc)
-   result = unittest.TextTestRunner(verbosity=2).run(suite)
