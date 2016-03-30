@@ -19,21 +19,28 @@ For example if "chromedriver.exe" located in "C:\ChromeDriver" folder then syste
 set ChromeDriver=C:\ChromeDriver\chromedriver.exe
 ```
 
-Project can be executed in different ways. For example:
+Project can be executed in different ways. 
+For example inside GoogleCalculator folder you can run it as following:
 ```
 #One way
 python -m unittest -q sample.PyGoogleCalc
 
 #Another way
 python run_test.py
+
+#Or run it as module
+python -m sample
 ```
-Or if you extracted project into "C:\Project\GoogleCalculator" folder then execute it possibe in following ways.
+Or if you extracted project into "Work" folder (where path to project is "Work\GoogleCalculator") then you can execute it outside of work folder as following.
 ```
 #One way
-python -m unittest -q Project.GoogleCalculator.sample.PyGoogleCalc
+python -m unittest -q Work.GoogleCalculator.sample.PyGoogleCalc
 
 #Another way
-python Project\GoogleCalculator\run_test.py
+python Work\GoogleCalculator\run_test.py
+
+#Or run it as module
+python -m Work.GoogleCalculator
 ```
 
 In any case result will be the same.
