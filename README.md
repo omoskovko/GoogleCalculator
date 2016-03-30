@@ -3,6 +3,8 @@ Simple project that test Google Calculator using Selenium and Unittest based on 
 The main idea of this project it's education of new staff that know nothing about Selenium and unittest and need to learn it quickly.
 This project doesn't cover all functionality of Selenium and unittest but can get basic knowledges that can help quickly understand main idea of it.
 
+Project is tested with Python 3.4 and there is no warranty that it will work fine with lower version. But everything can be.
+
 Project starts Firefox or Chrome, open Google Calculator and makes some calculations.
 All calculations are verified by unittest and when calculations is finished the "GoogleCalculator\sample\output.png" folder will contain png-file with screen for each test cases.
 Current PNG-files in the "GoogleCalculator\sample\output.png" folder is stored only as example and will be rewritten when test complete.
