@@ -1,5 +1,4 @@
-import unittest
-from . import PyGoogleCalc 
+from . import PyGoogleCalc, testResult
 
-suite = unittest.TestLoader().loadTestsFromTestCase(PyGoogleCalc)
-result = unittest.TextTestRunner(verbosity=2).run(suite)
+calcRes = testResult(PyGoogleCalc)
+calcRes.runTest()
