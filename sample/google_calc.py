@@ -7,13 +7,14 @@ from . import CalcPObject, CalcData
 
 class PyGoogleCalc(unittest.TestCase):
     @staticmethod
-    def get_out_folder(*dirName):
+    def get_out_path(*dirList):
         mainFileName = inspect.stack()[0][1]
-        return os.path.abspath(os.path.join(os.path.dirname(mainFileName), *dirName))
+        currOutFolder = 'output.log'
+        return os.path.abspath(os.path.join(os.path.dirname(mainFileName), currOutFolder, *dirList))
         
     @classmethod
     def setUpClass(cls):
-        cls.outLogFolder = cls.get_out_folder('output.log')
+        cls.outLogFolder = cls.get_out_path()
         try:
            cls.driver = webdriver.Firefox()
         except Exception:
@@ -26,12 +27,14 @@ class PyGoogleCalc(unittest.TestCase):
                         '''
            assert 'ChromeDriver' in os.environ, assertInfo
            cromeLogFile = None
-           #cromeLogFile = os.path.join(cls.outLogFolder, 'cromedriver.log')
+           #cromeLogFile = cls.get_out_path('cromedriver.log')
            cls.driver = webdriver.Chrome(os.environ['ChromeDriver'], service_log_path=cromeLogFile)
         cls.driver.get('https://www.google.com')
 
         cls.cObj = CalcPObject(cls.driver)
         cls.cObj.open_calc('1+2')
+        #cls.driver.set_window_size(945, 712)
+        #cls.driver.set_window_position(400, 10)
 
     def setUp(self):
         self.tCaseName = self.id().split('.')[-1]
