@@ -6,8 +6,14 @@ import unittest
 from . import CalcPObject, CalcData
 
 class PyGoogleCalc(unittest.TestCase):
+    @staticmethod
+    def get_out_folder(*dirName):
+        mainFileName = inspect.stack()[0][1]
+        return os.path.abspath(os.path.join(os.path.dirname(mainFileName), *dirName))
+        
     @classmethod
     def setUpClass(cls):
+        cls.outLogFolder = cls.get_out_folder('output.log')
         try:
            cls.driver = webdriver.Firefox()
         except Exception:
@@ -19,7 +25,9 @@ class PyGoogleCalc(unittest.TestCase):
                            for more information or install Firefox.
                         '''
            assert 'ChromeDriver' in os.environ, assertInfo
-           cls.driver = webdriver.Chrome(os.environ['ChromeDriver'])
+           cromeLogFile = None
+           #cromeLogFile = os.path.join(cls.outLogFolder, 'cromedriver.log')
+           cls.driver = webdriver.Chrome(os.environ['ChromeDriver'], service_log_path=cromeLogFile)
         cls.driver.get('https://www.google.com')
 
         cls.cObj = CalcPObject(cls.driver)
@@ -58,9 +66,7 @@ class PyGoogleCalc(unittest.TestCase):
         self.assertEqual(check_res, ResStr)
 
     def tearDown(self):
-        mainFileName = inspect.stack()[0][1]
-        outPngFile = os.path.abspath(os.path.join(os.path.dirname(mainFileName), 
-                                     'output.png', self.tCaseName+'.png'))
+        outPngFile = os.path.join(self.outLogFolder, self.tCaseName+'.png')
         self.driver.get_screenshot_as_file(outPngFile)
 
     @classmethod
