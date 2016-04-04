@@ -14,7 +14,6 @@ class PyGoogleCalc(unittest.TestCase):
         
     @classmethod
     def setUpClass(cls):
-        cls.outLogFolder = cls.get_out_path()
         try:
            cls.driver = webdriver.Firefox()
         except Exception:
@@ -69,7 +68,7 @@ class PyGoogleCalc(unittest.TestCase):
         self.assertEqual(check_res, ResStr)
 
     def tearDown(self):
-        outPngFile = os.path.join(self.outLogFolder, self.tCaseName+'.png')
+        outPngFile = self.get_out_path(self.tCaseName+'.png')
         self.driver.get_screenshot_as_file(outPngFile)
 
     @classmethod
