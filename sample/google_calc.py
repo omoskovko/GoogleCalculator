@@ -18,11 +18,11 @@ class PyGoogleCalc(unittest.TestCase):
            cls.driver = webdriver.Firefox()
         except Exception:
            assertInfo = '''
-                           Firefox is not installed and
-                           system paramer "ChromDriver" is not defined.
-                           Please add it with path to ChromDriver binary.
-                           See https://sites.google.com/a/chromium.org/chromedriver/home
-                           for more information or install Firefox.
+                        Firefox is not installed and
+                        system paramer "ChromDriver" is not defined.
+                        Please add it with path to ChromDriver binary.
+                        See https://sites.google.com/a/chromium.org/chromedriver/home
+                        for more information or install Firefox.
                         '''
            assert 'ChromeDriver' in os.environ, assertInfo
            cromeLogFile = None
