@@ -45,3 +45,4 @@ class testResult(object):
         for r in self.result.failures:
            print(*r, sep='\n', end='\n', file=myOutFile)
         myOutFile.close()
+        raise(Exception("Ended with errors"))
