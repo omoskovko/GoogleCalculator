@@ -1,6 +1,5 @@
 import unittest
 import sys
-from xmlrunner import XMLTestRunner
 
 class testResult(object):
     def __init__(self, testClass):
@@ -17,7 +16,7 @@ class testResult(object):
         if isSilent:
            paramDic['stream'] = open(self.outLogFile, 'w')
         suite = unittest.TestLoader().loadTestsFromTestCase(self.cTest)
-        self.result = XMLTestRunner(**paramDic).run(suite)
+        self.result = unittest.TextTestRunner(**paramDic).run(suite)
         if paramDic['stream']:
            paramDic['stream'].close()
         self.checkResult(isSilent)
