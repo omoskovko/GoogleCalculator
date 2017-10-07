@@ -1,9 +1,9 @@
 pipeline {
-    agent { docker 'python:3.4' }
+    agent any
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                bat 'python run_test.py'
+                bat 'set'
             }
         }
     }
