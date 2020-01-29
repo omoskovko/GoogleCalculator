@@ -3,10 +3,14 @@ from .common.project_data import CalcData
 
 class TestCalc:
     @pytest.fixture(autouse=True)
-    def process_func(self, request):
-        print("SetUp function {0} can be here".format(request.function.__name__))
+    def process_func(self, request, resource_handler):
+        print("SetUp function {0}".format(request.function.__name__))
+        resource_handler.clear_result()
+
         yield
-        print("TearDown function {0} can be here".format(request.function.__name__))
+
+        print("TearDown function {0}".format(request.function.__name__))
+        resource_handler.clear_result()
         
 
     @pytest.mark.parametrize("test_id", 
