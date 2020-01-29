@@ -2,7 +2,9 @@ import pytest
 from .common.project_data import CalcData
 
 class TestCalc:
-    @pytest.mark.parametrize("test_id", ["test_ln_calc", "test_plus_calc", "test_multy_calc", "test_long_calc"])
+    @pytest.mark.parametrize("test_id", 
+        ["test_ln_calc", "test_plus_calc", "test_multy_calc", pytest.param("test_long_calc", marks=pytest.mark.xfail)]
+    )
     def test_google_calc(self, resource_handler, test_id):
         calc_str = CalcData.calcDict[test_id][0]
         check_res = CalcData.calcDict[test_id][1]
