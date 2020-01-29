@@ -22,7 +22,7 @@ def pytest_runtest_makereport(item, call):
     rep = outcome.get_result()
     
     # we only look at actual failing test calls, not setup/teardown
-    if rep.when == "call" and not rep.failed:
+    if rep.when == "call" and rep.failed:
         p = re.compile('(\:|\(|\)|\.)')
         #outPngFile = get_out_path(rep.nodeid.replace(":", "_").replace("(", "_").replace(")", "_").replace(".", "_")+".png")
         outPngFile = get_out_path(p.sub(':', rep.nodeid).split(":")[-1]+".png")
