@@ -17,17 +17,8 @@ class PyGoogleCalc(unittest.TestCase):
         try:
            cls.driver = webdriver.Firefox()
         except Exception:
-           assertInfo = '''
-                        Firefox is not installed and
-                        system paramer "ChromDriver" is not defined.
-                        Please add it with path to ChromDriver binary.
-                        See https://sites.google.com/a/chromium.org/chromedriver/home
-                        for more information or install Firefox.
-                        '''
-           assert 'ChromeDriver' in os.environ, assertInfo
-           cromeLogFile = None
-           #cromeLogFile = cls.get_out_path('cromedriver.log')
-           cls.driver = webdriver.Chrome(os.environ['ChromeDriver'], service_log_path=cromeLogFile)
+           cls.driver = webdriver.Chrome()
+
         cls.driver.get('https://www.google.com')
 
         cls.cObj = CalcPObject(cls.driver)
