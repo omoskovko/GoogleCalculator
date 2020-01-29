@@ -10,6 +10,9 @@ from .common.google_one_box import GoogleOneBox
 def get_out_path(*dirList):
     mainFileName = inspect.stack()[0][1]
     currOutFolder = 'output.png'
+    if not os.path.exists(currOutFolder):
+        os.makedirs(currOutFolder)
+
     return os.path.abspath(os.path.join(os.path.dirname(mainFileName), currOutFolder, *dirList))
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
