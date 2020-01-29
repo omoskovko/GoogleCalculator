@@ -4,6 +4,12 @@ from .common.project_data import CalcData
 class TestCalc:
     @pytest.fixture(autouse=True)
     def process_func(self, request, resource_handler):
+        '''
+          The class-level process_func fixture is marked with autouse=true which implies 
+          that all test methods in the class will use this fixture without a need to state it 
+          in the test function signature or with a class-level usefixtures decorator.
+          http://doc.pytest.org/en/latest/fixture.html#autouse-fixtures-xunit-setup-on-steroids
+        '''
         print("SetUp function {0}".format(request.function.__name__))
         resource_handler.clear_result()
 
