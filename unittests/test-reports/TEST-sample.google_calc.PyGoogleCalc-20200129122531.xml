@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<testsuite name="sample.google_calc.PyGoogleCalc-20200129122531" tests="4" time="20.440" failures="0" errors="0">
+	<testcase classname="sample.google_calc.PyGoogleCalc" name="test_ln_calc" time="6.213"/>
+	<testcase classname="sample.google_calc.PyGoogleCalc" name="test_long_calc" time="6.006"/>
+	<testcase classname="sample.google_calc.PyGoogleCalc" name="test_multy_calc" time="4.375"/>
+	<testcase classname="sample.google_calc.PyGoogleCalc" name="test_plus_calc" time="3.846"/>
+	<system-out><![CDATA[]]></system-out>
+	<system-err><![CDATA[]]></system-err>
+</testsuite>

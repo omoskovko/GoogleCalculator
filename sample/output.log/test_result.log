@@ -1,7 +1,0 @@
-ERRORS:
-<xmlrunner.xmlrunner._TestInfo object at 0x03EA2150>
-Traceback (most recent call last):
-  File "C:\Install\Work\GoogleCalculator\sample\google_calc.py", line 68, in test_long_calc
-    self.assertEqual(check_res, ResStr)
-AssertionError: 12.5416666667 != 11.5416666667
-
