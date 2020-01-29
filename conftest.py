@@ -22,7 +22,7 @@ def pytest_runtest_makereport(item, call):
     if rep.when == "call" and rep.failed:
         p = re.compile('(\:|\(|\)|\.)')
         #outPngFile = get_out_path(rep.nodeid.replace(":", "_").replace("(", "_").replace(")", "_").replace(".", "_")+".png")
-        outPngFile = get_out_path(p.sub('_', rep.nodeid)+".png")
+        outPngFile = get_out_path(p.sub(':', rep.nodeid).split(":")[-1]+".png")
         #print("Failed test is: "+outPngFile)
         
         try:
