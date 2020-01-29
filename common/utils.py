@@ -1,9 +1,8 @@
 from selenium import webdriver
 
 def get_driver(dProfile='Firefox'):
-    if dProfile == 'Firefox':
-        driver = webdriver.Firefox()
-    else: 
-        driver = webdriver.Chrome()
+    webDrivers = {}
+    webDrivers["Chrome"] = webdriver.Chrome
+    webDrivers["Firefox"] = webdriver.Firefox
         
-    return driver
+    return webDrivers.get(dProfile, webdriver.Firefox)()
