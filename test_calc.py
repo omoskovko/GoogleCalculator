@@ -1,5 +1,4 @@
 import pytest
-#from simple_salesforce import Salesforce
 from .common.project_data import CalcData
 
 class TestCalc:
