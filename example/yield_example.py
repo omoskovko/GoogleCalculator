@@ -1,10 +1,11 @@
 class MyHookimpl(object):
-    def __init__(self):
+    def __init__(self, hook_name):
         self.gen = None
+        self.hook_name = hook_name
 
-    def __call__(self, func, *arc, **kwargs):
+    def __call__(self, func):
         print("Hook is invoked")
-        self.gen = func(*arc, **kwargs)
+        self.gen = func(self.hook_name)
         val = next(self.gen)
         return val
 
@@ -16,13 +17,13 @@ class MyHookimpl(object):
         except StopIteration:
           pass
 
-test_wrap = MyHookimpl()
+test_wrap = MyHookimpl("Yield example")
 
 @test_wrap
-def my_test():
-    print("SetUp")
+def my_test(test_name):
+    print("SetUp {0}".format(test_name))
     yield "my object is here"
-    print("TearDown")
+    print("TearDown {0}".format(test_name))
     
 
 print(my_test)
@@ -40,10 +41,10 @@ test_wrap.stop_gen()
 # OutPut of this code will be as following
 
 Hook is invoked
-SetUp
+SetUp Yield example
 my object is here
 Next step
 aaa=my object is here
 Before teardown
-TearDown
+TearDown Yield example
 '''
