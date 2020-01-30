@@ -1,8 +1,3 @@
-'''
-  Following example demonstrate how SetUp and Teardown methods 
-  are implemented in the pytest
-'''
-
 class MyHookimpl(object):
     def __init__(self):
         self.gen = None
