@@ -3,13 +3,24 @@
   are implemented in the pytest
 '''
 
-gen = None
+class MyHookimpl(object):
+    def __init__(self):
+        self.gen = None
 
-def test_wrap(func, *arc, **kwargs):
-    global gen 
-    gen = func(*arc, **kwargs)
-    val = next(gen)
-    return val
+    def __call__(self, func, *arc, **kwargs):
+        self.gen = func(*arc, **kwargs)
+        val = next(self.gen)
+        return val
+
+    def stop_gen(self):
+        try:
+          # Here TearDown will be invoked
+          self.gen.send(None)
+          raise Exception("has second yield")
+        except StopIteration:
+          pass
+
+test_wrap = MyHookimpl()
 
 @test_wrap
 def my_test():
@@ -21,11 +32,8 @@ def my_test():
 print(my_test)
 print("Before teardown")
 
-try:
-  # Here TearDown will be invoked
-  gen.send(None)
-except StopIteration:
-  pass
+# Here TearDown will be invoked
+test_wrap.stop_gen()
 
 '''
 # OutPut of this code will be as following
