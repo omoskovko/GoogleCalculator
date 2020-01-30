@@ -25,3 +25,12 @@ try:
   gen.send(None)
 except StopIteration:
   pass
+
+'''
+# OutPut of this code will be as following
+
+SetUp
+my_func str
+Before teardown
+TearDown
+'''
