@@ -25,7 +25,7 @@ test_wrap = MyHookimpl()
 @test_wrap
 def my_test():
     print("SetUp")
-    yield "my_func str"
+    yield "my object is here"
     print("TearDown")
     
 
