@@ -5,13 +5,13 @@
 
 gen = None
 
-def test_vrap(func, *arc, **kwargs):
+def test_wrap(func, *arc, **kwargs):
     global gen 
     gen = func(*arc, **kwargs)
     val = next(gen)
     return val
 
-@test_vrap
+@test_wrap
 def my_test():
     print("SetUp")
     yield "my_func str"
