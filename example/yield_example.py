@@ -54,11 +54,11 @@ def my_next_test(test_name, my_test):
 
 print(my_next_test)
 
-print("Next step")
+print("- Next step -----------")
 aaa = my_test
 
 print("aaa={0}".format(aaa))
-print("Before teardown")
+print("- Before teardown -----")
 
 # Here TearDown will be invoked
 test_wrap.stop_gen()
@@ -70,9 +70,9 @@ SetUp Basic values
 SetUp my_test
 SetUp my_next_test
 Basic value - My test value is: Basic value
-Next step
+- Next step -----------
 aaa=My test value is: Basic value
-Before teardown
+- Before teardown -----
 TearDown Basic values
 TearDown my_test
 TearDown my_next_test
