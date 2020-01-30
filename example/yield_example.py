@@ -39,7 +39,7 @@ test_wrap.stop_gen()
 # OutPut of this code will be as following
 
 SetUp
-my_func str
+my object is here
 Before teardown
 TearDown
 '''
