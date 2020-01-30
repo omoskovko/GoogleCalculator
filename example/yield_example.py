@@ -22,6 +22,7 @@ print(my_test)
 print("Before teardown")
 
 try:
+  # Here TearDown will be invoked
   gen.send(None)
 except StopIteration:
   pass
