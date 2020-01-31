@@ -51,7 +51,7 @@ def pytest_addoption(parser):
 @pytest.fixture(scope="session")
 def resource_handler(request):
     googleBox = GoogleOneBox(get_driver(request.config.option.driver), 'https://www.google.com')
-    rh = googleBox.search_for("1+2")
+    rh = googleBox.search_for("1+2=")
 
     # The current best practice for setup and teardown is to use yield
     # http://doc.pytest.org/en/latest/fixture.html#fixture-finalization-executing-teardown-code
