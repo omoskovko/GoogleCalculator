@@ -1,5 +1,5 @@
 import inspect
-from inspect import signature
+#from inspect import signature
 from collections import OrderedDict
 
 class MyHookimpl(object):
