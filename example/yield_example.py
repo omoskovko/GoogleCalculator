@@ -12,7 +12,7 @@ class MyHookimpl(object):
             if p in self.func_regs:
                params_list.append(self.func_regs[p][0])
 
-        gen = (func(*params_list))
+        gen = func(*params_list)
         val = next(gen)
         self.func_regs[func.__name__] = (val, gen)
         return val
