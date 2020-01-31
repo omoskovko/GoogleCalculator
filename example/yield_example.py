@@ -20,7 +20,7 @@ class MyHookimpl(object):
     def stop_gen(self):
           # Here TearDown will be invoked
           err = None
-          for val, g in self.func_regs.values():
+          for val, g in reversed(self.func_regs.values()):
               try:
                   g.send(None)
                   err = Exception("{0} has second yield".format(val))
@@ -55,9 +55,10 @@ def my_next_test(test_name, my_test):
 print(my_next_test)
 
 print("- Next step -----------")
-aaa = my_test
 
+aaa = my_test
 print("aaa={0}".format(aaa))
+
 print("- Before teardown -----")
 
 # Here TearDown will be invoked
@@ -73,7 +74,7 @@ Basic value - My test value is: Basic value
 - Next step -----------
 aaa=My test value is: Basic value
 - Before teardown -----
-TearDown Basic values
-TearDown my_test
 TearDown my_next_test
+TearDown my_test
+TearDown Basic values
 '''
