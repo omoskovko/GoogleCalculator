@@ -1,3 +1,4 @@
+import inspect
 from inspect import signature
 from collections import OrderedDict
 
@@ -13,6 +14,9 @@ class MyHookimpl(object):
 
             if not func.__name__ in self.func_regs:
                 #print("Execute {0}".format(func.__name__))
+                if not inspect.isgeneratorfunction(func):
+                   raise Exception("{0} has no yield".format(func.__name__))
+
                 gen = func(*arc, **kwargw)
                 val = next(gen)
                 self.func_regs[func.__name__] = (val, gen)
