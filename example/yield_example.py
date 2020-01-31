@@ -32,7 +32,8 @@ class MyHookimpl(object):
           else:
               gen_dict = self.func_regs
 
-          for i in range(len(gen_dict)):
+          reg_dict_len = len(gen_dict)
+          for i in range(reg_dict_len):
               fname, val = gen_dict.popitem()
 
           #for val, g in reversed(self.func_regs.values()):
