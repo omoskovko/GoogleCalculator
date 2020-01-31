@@ -47,7 +47,7 @@ def pytest_runtest_makereport(item, call):
     
 def pytest_addoption(parser):
     parser.addoption("--driver", action="store", default="Firefox", help="WEB Driver name")
-    
+
 @pytest.fixture(scope="session")
 def resource_handler(request):
     googleBox = GoogleOneBox(get_driver(request.config.option.driver), 'https://www.google.com')

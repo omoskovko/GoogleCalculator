@@ -2,79 +2,80 @@ from inspect import signature
 from collections import OrderedDict
 
 class MyHookimpl(object):
-    def __init__(self):
+    def __init__(self, ses):
         self.func_regs = OrderedDict()
+        self.session = ses
 
     def __call__(self, func):
-        parameters = signature(func).parameters
-        params_list = []
-        for p in parameters:
-            if p in self.func_regs:
-               params_list.append(self.func_regs[p][0])
+        def hook_func(*arc, **kwargw):
+            if self.session == "function" and func.__name__ in self.func_regs:
+               self.stop_gen(func.__name__)
 
-        gen = func(*params_list)
-        val = next(gen)
-        self.func_regs[func.__name__] = (val, gen)
-        return val
+            if not func.__name__ in self.func_regs:
+                #print("Execute {0}".format(func.__name__))
+                gen = func(*arc, **kwargw)
+                val = next(gen)
+                self.func_regs[func.__name__] = (val, gen)
+            else:
+                val = self.func_regs[func.__name__][0]
+            return val
+        return hook_func
 
-    def stop_gen(self):
+    def stop_gen(self, gen_name=None):
           # Here TearDown will be invoked
           err = None
-          for val, g in reversed(self.func_regs.values()):
+          gen_dict = OrderedDict()
+
+          if gen_name:
+              val, gen = self.func_regs.pop(gen_name)
+              gen_dict[gen_name] = (val, gen)
+          else:
+              gen_dict = self.func_regs
+
+          for i in range(len(gen_dict)):
+              fname, val = gen_dict.popitem()
+
+          #for val, g in reversed(self.func_regs.values()):
               try:
-                  g.send(None)
-                  err = Exception("{0} has second yield".format(val))
+                  val[1].send(None)
+                  err = Exception("{0} has second yield".format(fname))
               except StopIteration:
                 pass
           if err:
              raise err
 
-test_wrap = MyHookimpl()
+test_wrap = MyHookimpl("session")
 
 @test_wrap
 def test_name():
-    print("SetUp Basic values")
+    print("---------------------")
+    print("SetUp test_name")
     yield "Basic value"
-    print("TearDown Basic values")
+    print("TearDown test_name")
+    print("---------------------")
     
 @test_wrap
 def my_test(test_name):
+    print("---------------------")
     print("SetUp my_test")
     val = "My test value is: " + test_name
     yield val
     print("TearDown my_test")
+    print("---------------------")
     
 @test_wrap
 def my_next_test(test_name, my_test):
+    print("---------------------")
     print("SetUp my_next_test")
     val = test_name + " - " + my_test
     yield val
     print("TearDown my_next_test")
-    
+    print("---------------------")
 
-print(my_next_test)
+print("- step 1 --------------")
+print(my_test(test_name()))
 
-print("- Next step -----------")
+print("- step 2 --------------")
+print(my_next_test(test_name(), my_test(test_name())))
 
-aaa = my_test
-print("aaa={0}".format(aaa))
-
-print("- Before teardown -----")
-
-# Here TearDown will be invoked
 test_wrap.stop_gen()
-
-'''
-# OutPut of this code will be as following
-
-SetUp Basic values
-SetUp my_test
-SetUp my_next_test
-Basic value - My test value is: Basic value
-- Next step -----------
-aaa=My test value is: Basic value
-- Before teardown -----
-TearDown my_next_test
-TearDown my_test
-TearDown Basic values
-'''
