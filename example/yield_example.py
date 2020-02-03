@@ -1,4 +1,5 @@
 import inspect
+from functools import wraps
 #from inspect import signature
 from collections import OrderedDict
 
@@ -8,6 +9,7 @@ class MyHookimpl(object):
         self.session = ses
 
     def __call__(self, func):
+        @wraps(func)
         def hook_func(*arc, **kwargw):
             if self.session == "function" and func.__name__ in self.func_regs:
                self.stop_gen(func.__name__)
@@ -60,19 +62,19 @@ def test_name():
     print("---------------------")
     
 @test_wrap
-def my_test(test_name):
+def my_test(param1):
     print("---------------------")
     print("SetUp my_test")
-    val = "My test value is: " + test_name
+    val = "My test value is: " + param1
     yield val
     print("TearDown my_test")
     print("---------------------")
     
 @test_wrap
-def my_next_test(test_name, my_test):
+def my_next_test(param1, param2):
     print("---------------------")
     print("SetUp my_next_test")
-    val = test_name + " - " + my_test
+    val = param1 + " - " + param2
     yield val
     print("TearDown my_next_test")
     print("---------------------")
