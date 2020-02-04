@@ -34,15 +34,15 @@ class MyHookimpl(object):
 
           reg_dict_len = len(gen_dict)
           for i in range(reg_dict_len):
-              fname, val = gen_dict.popitem()
+              fname, (gen, func) = gen_dict.popitem()
 
           #for val, g in reversed(self.func_regs.values()):
               try:
-                  val[0].send(None)
+                  gen.send(None)
                   err = Exception("{0} has second yield".format(fname))
               except StopIteration:
                   del self.__dict__[fname]
-                  self.__dict__[fname] = val[1]
+                  self.__dict__[fname] = func
           if err:
              raise err
 
