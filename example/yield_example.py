@@ -1,6 +1,4 @@
 import inspect
-from functools import wraps
-#from inspect import signature
 from collections import OrderedDict
 
 class MyHookimpl(object):
@@ -8,23 +6,20 @@ class MyHookimpl(object):
         self.func_regs = OrderedDict()
         self.session = ses
 
-    def __call__(self, func):
-        @wraps(func)
-        def hook_func(*arc, **kwargw):
-            if self.session == "function" and func.__name__ in self.func_regs:
-               self.stop_gen(func.__name__)
+    def __call__(self, hookfunc):
+        def hook_func(*arc, **kwargs):
+            if not hookfunc.__name__ in self.func_regs:
+                if not inspect.isgeneratorfunction(hookfunc):
+                   raise Exception("{0} has no yield".format(hookfunc.__name__))
 
-            if not func.__name__ in self.func_regs:
-                #print("Execute {0}".format(func.__name__))
-                if not inspect.isgeneratorfunction(func):
-                   raise Exception("{0} has no yield".format(func.__name__))
-
-                gen = func(*arc, **kwargw)
+                gen = hookfunc(*arc, **kwargs)
                 val = next(gen)
-                self.func_regs[func.__name__] = (val, gen)
-            else:
-                val = self.func_regs[func.__name__][0]
-            return val
+                self.__dict__[hookfunc.__name__] = val #(val, gen)
+                self.func_regs[hookfunc.__name__] = (gen, hook_func)
+
+            return self.__dict__[hookfunc.__name__]
+
+        self.__dict__[hookfunc.__name__] = hook_func
         return hook_func
 
     def stop_gen(self, gen_name=None):
@@ -33,8 +28,8 @@ class MyHookimpl(object):
           gen_dict = OrderedDict()
 
           if gen_name:
-              val, gen = self.func_regs.pop(gen_name)
-              gen_dict[gen_name] = (val, gen)
+              gen, func = self.func_regs.pop(gen_name)
+              gen_dict[gen_name] = (gen, func)
           else:
               gen_dict = self.func_regs
 
@@ -44,15 +39,17 @@ class MyHookimpl(object):
 
           #for val, g in reversed(self.func_regs.values()):
               try:
-                  val[1].send(None)
+                  val[0].send(None)
                   err = Exception("{0} has second yield".format(fname))
               except StopIteration:
-                pass
+                  del self.__dict__[fname]
+                  self.__dict__[fname] = val[1]
           if err:
              raise err
 
 test_wrap = MyHookimpl("session")
 
+print("-- Def --")
 @test_wrap
 def test_name():
     print("---------------------")
@@ -79,10 +76,20 @@ def my_next_test(param1, param2):
     print("TearDown my_next_test")
     print("---------------------")
 
+print("-- End Def --")
 print("- step 1 --------------")
-print(my_test(test_name()))
+t = test_wrap.my_test("Test global")
+print("t={0}".format(t))
+print(test_wrap.test_name())
 
 print("- step 2 --------------")
-print(my_next_test(test_name(), my_test(test_name())))
+t = my_test("aaaaaaaaaa")
+print("t={0}".format(t))
+#print(dir(test_wrap.test_name))
 
+test_wrap.stop_gen()
+print(test_wrap.test_name())
+
+print("- step 3 --------------")
+print(test_wrap.my_test("aaaaaaaaaaa"))
 test_wrap.stop_gen()
