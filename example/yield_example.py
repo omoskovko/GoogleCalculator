@@ -2,9 +2,8 @@ import inspect
 from collections import OrderedDict
 
 class MyHookimpl(object):
-    def __init__(self, ses):
+    def __init__(self):
         self.func_regs = OrderedDict()
-        self.session = ses
 
     def __call__(self, hookfunc):
         def hook_func(*arc, **kwargs):
@@ -47,7 +46,7 @@ class MyHookimpl(object):
           if err:
              raise err
 
-test_wrap = MyHookimpl("session")
+test_wrap = MyHookimpl()
 
 print("-- Def --")
 @test_wrap
