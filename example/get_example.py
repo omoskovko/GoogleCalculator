@@ -1,7 +1,7 @@
 import pdb
 from time import time
 
-class cached_propert(object):
+class cached_property(object):
     '''
           Data descriptors with __set__() and __get__() defined always override 
           a redefinition in an instance dictionary. 
@@ -33,7 +33,7 @@ class cached_propert(object):
 
         return value
 
-class not_cached_propert(cached_propert):
+class not_cached_property(cached_property):
     '''
           Data descriptors with __set__() and __get__() defined always override 
           a redefinition in an instance dictionary. 
@@ -54,11 +54,11 @@ class TestCls(object):
         self.test_property = 10
         self.test_property2 = 10
 
-    @cached_propert
+    @cached_property
     def test_property(self):
         return "Value is '{0}'".format(self.val)
 
-    @not_cached_propert
+    @not_cached_property
     def test_property2(self):
         return "Value is '{0}'".format(self.val)
 
@@ -66,7 +66,7 @@ class TestCls2(object):
     def __init__(self, val):
         self.val = val
 
-    @cached_propert()
+    @cached_property()
     def test_property(self):
         try:
             return "Value is '{0}'".format(self.val)
