@@ -16,11 +16,7 @@ class cached_property(object):
 
     def __call__(self, func):
         print("__call__")
-        if not func is None:
-           self.func = func
-           self.__module__ = func.__module__
-           self.__name__ = func.__name__
-        return self
+        return type(self)(func)
 
     def __get__(self, instance, owner=None):
         print("__get__")
