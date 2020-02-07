@@ -1,5 +1,6 @@
 import pdb
 from time import time
+from inspect import signature
 
 class cached_property(object):
     '''
@@ -42,20 +43,25 @@ class not_cached_property(cached_property):
 
     def __set__(self, obj, value):
         print("__set__")
-        obj.__dict__[self.__name__] = value
+        params = signature(self.func).parameters
+        if len(params) < 2:
+           raise Exception("There is no way to set value")
+        obj.__dict__[self.__name__] = self.func(obj, value)
 
 class TestCls(object):
     def __init__(self, val):
         self.val = val
         self.test_property = 10
-        self.test_property2 = 10
+        self.test_property2 = 15
 
     @cached_property
     def test_property(self):
         return "Value is '{0}'".format(self.val)
 
     @not_cached_property
-    def test_property2(self):
+    def test_property2(self, set_value=None):
+        if not set_value is None:
+           self.val = set_value
         return "Value is '{0}'".format(self.val)
 
 class TestCls2(object):
