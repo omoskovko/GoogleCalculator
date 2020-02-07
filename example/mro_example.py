@@ -210,3 +210,22 @@ print("=>".join([cls.__name__ for cls in Z.__mro__]))
 # Resulrt is
 Z=>K1=>K2=>K3=>D=>A=>B=>C=>E=>object
 '''
+
+class A(object): pass
+class B(object): pass
+class C(object): pass
+class D(object): pass
+class E(object): pass
+class K1(A,B,C): pass
+class K2(B,D,E): pass
+class K3(D,A):   pass
+class Z(K1,K2,K3): pass
+'''
+# Result is
+Traceback (most recent call last):
+  File "mro_example.py", line 222, in <module>
+    class Z(K1,K2,K3): pass
+TypeError: Cannot create a consistent method resolution
+order (MRO) for bases A, B, D
+'''
+
