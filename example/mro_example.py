@@ -1,24 +1,23 @@
 class MyType(type):
-    pass
+    var = "MyType"
 
 class MyObject(object):
-    pass
+    var = "MyObject"
 
 class NoneSample(MyObject):
-    pass
+    var = "NoneSample"
 
 class Example(MyObject):
-    pass
+    var = "Example"
 
 class Sibling(MyType):
-    pass
+    var = "Sibling"
 
 class ExampleSibling(Example, Sibling):
     pass
 
 class ExSibngNSample(Example, Sibling, NoneSample):
     pass
-
 '''
 9.5.1. Multiple Inheritance
 
@@ -53,11 +52,22 @@ For more detail, see https://www.python.org/download/releases/2.3/mro/.
     This attribute is a tuple of classes that are considered when looking for base classes during method resolution.
     https://docs.python.org/3/library/stdtypes.html#class.__mro__
 '''
-print(ExampleSibling.__mro__)
-print(ExSibngNSample.__mro__)
+'''
+for cls in ExampleSibling.__mro__:
+    if hasattr(cls, "var"):
+       print("{0}={1}".format(cls.__name__, cls.var))
+'''
+print("=>".join([cls.__name__ for cls in ExampleSibling.__mro__]))
+
+'''
+for cls in ExSibngNSample.__mro__:
+    if hasattr(cls, "var"):
+       print("{0}={1}".format(cls.__name__, cls.var))
+'''
+print("=>".join([cls.__name__ for cls in ExSibngNSample.__mro__]))
 
 '''
 # OutPut is like following
-(<class '__main__.ExampleSibling'>, <class '__main__.Example'>, <class '__main__.MyObject'>, <class '__main__.Sibling'>, <class '__main__.MyType'>, <class 'type'>, <class 'object'>)
-(<class '__main__.ExSibngNSample'>, <class '__main__.Example'>, <class '__main__.Sibling'>, <class '__main__.MyType'>, <class 'type'>, <class '__main__.NoneSample'>, <class '__main__.MyObject'>, <class 'object'>)
+ExampleSibling=>Example=>MyObject=>Sibling=>MyType=>type=>object
+ExSibngNSample=>Example=>Sibling=>MyType=>type=>NoneSample=>MyObject=>object
 '''
