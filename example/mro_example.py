@@ -23,6 +23,7 @@ class ExSibngNSample(Example, Sibling, NoneSample):
   class.__mro__
     This attribute is a tuple of classes that are considered when looking for base classes during method resolution.
     https://docs.python.org/3/library/stdtypes.html#class.__mro__
+    https://www.python.org/download/releases/2.3/mro/
 '''
 print(ExampleSibling.__mro__)
 print(ExSibngNSample.__mro__)
