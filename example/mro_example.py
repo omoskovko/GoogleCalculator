@@ -103,7 +103,6 @@ CPL[A]=merge([['A'], ['B', 'E', 'D', 'O', 'object'], ['C', 'D', 'F', 'O', 'objec
 
 MRO[A]=['A', 'B', 'E', 'C', 'D', 'F', 'O', 'object']
 
-A lazy programmer can obtain the MRO directly from Python 2.2, since in this case it coincides with the Python 2.3 linearization. 
 It is enough to invoke the .mro() method of class A:
 '''
 
