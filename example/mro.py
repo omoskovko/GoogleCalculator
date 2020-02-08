@@ -57,12 +57,14 @@ def merge(seqs):
       
       if not nonemptyseqs: return res
       i+=1
-      #print('\n',i,'round: candidates...')
+      #print(i,'round: candidates...')
       for seq in nonemptyseqs: # find merge candidates among seq heads
           cand = seq[0]
-          #print(' ',cand)
+          print(i,'round: ',cand.__name__)
           nothead=[s for s in nonemptyseqs if cand in s[1:]]
-          if nothead: cand=None #reject candidate
+          if nothead: 
+             print(i,'round: ',cand.__name__, "in", [[n.__name__ for n in nl] for nl in nothead], "not candidate")
+             cand=None #reject candidate
           else: break
       if not cand: raise Exception("Inconsistent hierarchy")
       res.append(cand)
@@ -77,6 +79,6 @@ def mro(C):
 def print_mro(C):
     print('\nMRO[%s]=%s' % (C.__name__,[c.__name__ for c in mro(C)]))
 
-print_mro(ex_9.Z)
+print_mro(ex_5.A)
 
 #</mro.py>
