@@ -166,34 +166,23 @@ Here are the linearizations according to the C3 MRO (the reader should verify th
     L[K3]= K3 D A O
     L[Z] = Z K1 K2 K3 D A B C E O
 
+-------------
+CPL[Z]=[['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
+-------------
+[['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
+[['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
+[['A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K2', 'K3']]
+[['A', 'B', 'C', 'O', 'object'], ['D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K3']]
+[['A', 'B', 'C', 'O', 'object'], ['D', 'B', 'E', 'O', 'object'], ['D', 'A', 'O', 'object']]
+[['A', 'B', 'C', 'O', 'object'], ['B', 'E', 'O', 'object'], ['A', 'O', 'object']]
+[['B', 'C', 'O', 'object'], ['B', 'E', 'O', 'object'], ['O', 'object']]
+[['C', 'O', 'object'], ['E', 'O', 'object'], ['O', 'object']]
+[['O', 'object'], ['E', 'O', 'object'], ['O', 'object']]
+[['O', 'object'], ['O', 'object'], ['O', 'object']]
+[['object'], ['object'], ['object']]
+[]
 
-                                       6
-                                      ---
-    Level 3                   ------ | O |-------
-                             /        ---        \
-                            /       /  |  \       \
-                           /       /   |   \       \
-                          /       /    |    \       \
-                         /       /     |     \       \
-                        /       /      |      \       \
-                      ---     ---     ---     ---    ---   
-    Level 2        5 | A | 6 | B | 7 | C | 4 | D | 8| E | 
-                      ---     ---     ---     ---    ---   
-                       \  \____\_     /        /\      /
-                        \      |\ \__/__      /  \    /
-                         \     | \  /   \    /    \  /
-                          \    |  \/     \__/__    \/
-                           |   |  /\       /   \   /\
-                           |   | /  \     /     \_/  \
-                           |   |/    \   /       /\   \
-                          -------      -------      ----
-    Level 1            1 |   K1  |  2 |   K2  | 3  | K3 | 
-                          -------      -------      ----
-                              \           |      /
-                               \          |     /
-                                   ------------
-    Level 0                     0 |      Z     |
-                                   ------------
+MRO['Z']=['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E', 'O', 'object']
 '''
 class A(object): pass
 class B(object): pass
