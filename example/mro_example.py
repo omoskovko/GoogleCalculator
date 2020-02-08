@@ -216,5 +216,16 @@ Traceback (most recent call last):
     class Z(K1,K2,K3): pass
 TypeError: Cannot create a consistent method resolution
 order (MRO) for bases A, B, D
-'''
 
+-------------
+In this case merge will be as following
+-------------
+CPL[Z]=[['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
+-------------
+[['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
+[['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
+[['A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K2', 'K3']]
+[['A', 'B', 'C', 'O', 'object'], ['B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K3']]
+[['A', 'B', 'C', 'O', 'object'], ['B', 'D', 'E', 'O', 'object'], ['D', 'A', 'O', 'object']]
+On this level error will be raised
+'''
