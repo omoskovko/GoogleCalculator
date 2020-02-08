@@ -49,12 +49,12 @@ class ex_9:
 
 def merge(seqs):
     print("-------------")
-    print('CPL[%s]=%s' % (seqs[0][0].__name__, [[c.__name__ for c in lc] for lc in seqs]))
+    print('CPL[{0}]=merge({1})'.format(seqs[0][0].__name__, [[c.__name__ for c in lc] for lc in seqs]))
     print("-------------")
-    res = []; i=0
+    res = []; i=0; cand = seqs[0][0]
     while 1:
       nonemptyseqs=[seq for seq in seqs if seq]
-      print([[c.__name__ for c in lc] for lc in nonemptyseqs])
+      
       if not nonemptyseqs: return res
       i+=1
       #print('\n',i,'round: candidates...')
@@ -68,14 +68,15 @@ def merge(seqs):
       res.append(cand)
       for seq in nonemptyseqs: # remove cand
           if seq[0] == cand: del seq[0]
+      print("[{1}]=merge({0})".format([[c.__name__ for c in lc] for lc in nonemptyseqs if lc], [r.__name__ for r in res]))
 
 def mro(C):
     "Compute the class precedence list (mro) according to C3"
     return merge([[C]]+list(map(mro,C.__bases__))+[list(C.__bases__)])
 
 def print_mro(C):
-    print('\nMRO[%s]=%s' % (C,[c.__name__ for c in mro(C)]))
+    print('\nMRO[%s]=%s' % (C.__name__,[c.__name__ for c in mro(C)]))
 
-print_mro(ex_9.Z)
+print_mro(ex_6.A)
 
 #</mro.py>
