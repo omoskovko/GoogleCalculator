@@ -77,6 +77,6 @@ def mro(C):
 def print_mro(C):
     print('\nMRO[%s]=%s' % (C.__name__,[c.__name__ for c in mro(C)]))
 
-print_mro(ex_6.A)
+print_mro(ex_9.Z)
 
 #</mro.py>
