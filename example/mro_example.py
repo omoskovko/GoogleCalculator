@@ -171,17 +171,16 @@ In this case merge will be as following
 -------------
 CPL[Z]=[['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
 -------------
-[['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
-[['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
-[['A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K2', 'K3']]
-[['A', 'B', 'C', 'O', 'object'], ['D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K3']]
-[['A', 'B', 'C', 'O', 'object'], ['D', 'B', 'E', 'O', 'object'], ['D', 'A', 'O', 'object']]
-[['A', 'B', 'C', 'O', 'object'], ['B', 'E', 'O', 'object'], ['A', 'O', 'object']]
-[['B', 'C', 'O', 'object'], ['B', 'E', 'O', 'object'], ['O', 'object']]
-[['C', 'O', 'object'], ['E', 'O', 'object'], ['O', 'object']]
-[['O', 'object'], ['E', 'O', 'object'], ['O', 'object']]
-[['O', 'object'], ['O', 'object'], ['O', 'object']]
-[['object'], ['object'], ['object']]
+['Z']=[['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
+['Z', 'K1']=[['A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K2', 'K3']]
+['Z', 'K1', 'K2']=[['A', 'B', 'C', 'O', 'object'], ['D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K3']]
+['Z', 'K1', 'K2', 'K3']=[['A', 'B', 'C', 'O', 'object'], ['D', 'B', 'E', 'O', 'object'], ['D', 'A', 'O', 'object']]
+['Z', 'K1', 'K2', 'K3', 'D']=[['A', 'B', 'C', 'O', 'object'], ['B', 'E', 'O', 'object'], ['A', 'O', 'object']]
+['Z', 'K1', 'K2', 'K3', 'D', 'A']=[['B', 'C', 'O', 'object'], ['B', 'E', 'O', 'object'], ['O', 'object']]
+['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B']=[['C', 'O', 'object'], ['E', 'O', 'object'], ['O', 'object']]
+['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C']=[['O', 'object'], ['E', 'O', 'object'], ['O', 'object']]
+['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E']=[['O', 'object'], ['O', 'object'], ['O', 'object']]
+['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E', 'O']=[['object'], ['object'], ['object']]
 []
 
 MRO['Z']=['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E', 'O', 'object']
@@ -224,10 +223,9 @@ In this case merge will be as following
 -------------
 CPL[Z]=[['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
 -------------
-[['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
-[['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
-[['A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K2', 'K3']]
-[['A', 'B', 'C', 'O', 'object'], ['B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K3']]
-[['A', 'B', 'C', 'O', 'object'], ['B', 'D', 'E', 'O', 'object'], ['D', 'A', 'O', 'object']]
+['Z']=[['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']]
+['Z', 'K1']=[['A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K2', 'K3']]
+['Z', 'K1', 'K2']=[['A', 'B', 'C', 'O', 'object'], ['B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K3']]
+['Z', 'K1', 'K2', 'K3']=[['A', 'B', 'C', 'O', 'object'], ['B', 'D', 'E', 'O', 'object'], ['D', 'A', 'O', 'object']]
 On this level error will be raised
 '''
