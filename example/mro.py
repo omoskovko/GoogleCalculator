@@ -56,6 +56,8 @@ def merge(seqs):
       nonemptyseqs=[seq for seq in seqs if seq]
       
       if not nonemptyseqs: return res
+      print("{1}+=merge({0})".format([[c.__name__ for c in lc] for lc in nonemptyseqs if lc], [r.__name__ for r in res]))
+
       i+=1
       #print(i,'round: candidates...')
       for seq in nonemptyseqs: # find merge candidates among seq heads
@@ -70,7 +72,6 @@ def merge(seqs):
       res.append(cand)
       for seq in nonemptyseqs: # remove cand
           if seq[0] == cand: del seq[0]
-      print("[{1}]=merge({0})".format([[c.__name__ for c in lc] for lc in nonemptyseqs if lc], [r.__name__ for r in res]))
 
 def mro(C):
     "Compute the class precedence list (mro) according to C3"
