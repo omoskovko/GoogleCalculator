@@ -56,7 +56,7 @@ def merge(seqs):
       nonemptyseqs=[seq for seq in seqs if seq]
       
       if not nonemptyseqs: return res
-      print("{1}+=merge({0})".format([[c.__name__ for c in lc] for lc in nonemptyseqs if lc], [r.__name__ for r in res]))
+      print("{1}+=merge({0})".format([[c.__name__ for c in lc] for lc in nonemptyseqs], [r.__name__ for r in res]))
 
       i+=1
       #print(i,'round: candidates...')
@@ -78,7 +78,7 @@ def mro(C):
     return merge([[C]]+list(map(mro,C.__bases__))+[list(C.__bases__)])
 
 def print_mro(C):
-    print('\nMRO[%s]=%s' % (C.__name__,[c.__name__ for c in mro(C)]))
+    print('\nMRO[%s]=%s' % (C.__name__,"[{0}]".format(", ".join([c.__name__ for c in mro(C)]))))
 
 print_mro(ex_5.A)
 
