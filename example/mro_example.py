@@ -52,26 +52,27 @@ In this case the merge will be as
 -------------
 CPL[A]=[['A'], MRO[B], MRO[C], ['B', 'C']]
 -------------
+[]+=merge([['A'], ['B', 'D', 'E', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['B', 'C']])
 1 round:  A
-[['A']]+=merge([['B', 'D', 'E', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['B', 'C']])
+['A']+=merge([['B', 'D', 'E', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['B', 'C']])
 2 round:  B
-[['A', 'B']]+=merge([['D', 'E', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['C']])
+['A', 'B']+=merge([['D', 'E', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['C']])
 3 round:  D
 3 round:  D not candidate
 3 round:  C
-[['A', 'B', 'C']]+=merge([['D', 'E', 'O', 'object'], ['D', 'F', 'O', 'object']])
+['A', 'B', 'C']+=merge([['D', 'E', 'O', 'object'], ['D', 'F', 'O', 'object']])
 4 round:  D
-[['A', 'B', 'C', 'D']]+=merge([['E', 'O', 'object'], ['F', 'O', 'object']])
+['A', 'B', 'C', 'D']+=merge([['E', 'O', 'object'], ['F', 'O', 'object']])
 5 round:  E
-[['A', 'B', 'C', 'D', 'E']]+=merge([['O', 'object'], ['F', 'O', 'object']])
+['A', 'B', 'C', 'D', 'E']+=merge([['O', 'object'], ['F', 'O', 'object']])
 6 round:  O
 6 round:  O not candidate
 6 round:  F
-[['A', 'B', 'C', 'D', 'E', 'F']]+=merge([['O', 'object'], ['O', 'object']])
+['A', 'B', 'C', 'D', 'E', 'F']+=merge([['O', 'object'], ['O', 'object']])
 7 round:  O
-[['A', 'B', 'C', 'D', 'E', 'F', 'O']]+=merge([['object'], ['object']])
+['A', 'B', 'C', 'D', 'E', 'F', 'O']+=merge([['object'], ['object']])
 8 round:  object
-[['A', 'B', 'C', 'D', 'E', 'F', 'O', 'object']]+=merge([])
+['A', 'B', 'C', 'D', 'E', 'F', 'O', 'object']+=merge([])
 
 MRO[A]=['A', 'B', 'C', 'D', 'E', 'F', 'O', 'object']
 
@@ -104,26 +105,27 @@ In this case the merge will be as
 -------------
 CPL[A]=[['A'], MRO[B], MRO[C], ['B', 'C']]
 -------------
+[]+=merge([['A'], ['B', 'E', 'D', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['B', 'C']])
 1 round:  A
-[['A']]+=merge([['B', 'E', 'D', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['B', 'C']])
+['A']+=merge([['B', 'E', 'D', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['B', 'C']])
 2 round:  B
-[['A', 'B']]+=merge([['E', 'D', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['C']])
+['A', 'B']+=merge([['E', 'D', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['C']])
 3 round:  E
-[['A', 'B', 'E']]+=merge([['D', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['C']])
+['A', 'B', 'E']+=merge([['D', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['C']])
 4 round:  D
 4 round:  D not candidate
 4 round:  C
-[['A', 'B', 'E', 'C']]+=merge([['D', 'O', 'object'], ['D', 'F', 'O', 'object']])
+['A', 'B', 'E', 'C']+=merge([['D', 'O', 'object'], ['D', 'F', 'O', 'object']])
 5 round:  D
-[['A', 'B', 'E', 'C', 'D']]+=merge([['O', 'object'], ['F', 'O', 'object']])
+['A', 'B', 'E', 'C', 'D']+=merge([['O', 'object'], ['F', 'O', 'object']])
 6 round:  O
 6 round:  O not candidate
 6 round:  F
-[['A', 'B', 'E', 'C', 'D', 'F']]+=merge([['O', 'object'], ['O', 'object']])
+['A', 'B', 'E', 'C', 'D', 'F']+=merge([['O', 'object'], ['O', 'object']])
 7 round:  O
-[['A', 'B', 'E', 'C', 'D', 'F', 'O']]+=merge([['object'], ['object']])
+['A', 'B', 'E', 'C', 'D', 'F', 'O']+=merge([['object'], ['object']])
 8 round:  object
-[['A', 'B', 'E', 'C', 'D', 'F', 'O', 'object']]+=merge([])
+['A', 'B', 'E', 'C', 'D', 'F', 'O', 'object']+=merge([])
 
 MRO[A]=['A', 'B', 'E', 'C', 'D', 'F', 'O', 'object']
 
@@ -174,38 +176,39 @@ In this case merge will be as following
 -------------
 CPL[Z]=[['Z'], MRO[K1], MRO[K2], MRO[K3], ['K1', 'K2', 'K3']]
 -------------
+[]+=merge([['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']])
 1 round:  Z
-[['Z']]+=merge([['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']])
+['Z']+=merge([['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']])
 2 round:  K1
-[['Z', 'K1']]+=merge([['A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K2', 'K3']])
+['Z', 'K1']+=merge([['A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K2', 'K3']])
 3 round:  A
 3 round:  A not candidate
 3 round:  K2
-[['Z', 'K1', 'K2']]+=merge([['A', 'B', 'C', 'O', 'object'], ['D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K3']])
+['Z', 'K1', 'K2']+=merge([['A', 'B', 'C', 'O', 'object'], ['D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K3']])
 4 round:  A
 4 round:  A not candidate
 4 round:  D
 4 round:  D not candidate
 4 round:  K3
-[['Z', 'K1', 'K2', 'K3']]+=merge([['A', 'B', 'C', 'O', 'object'], ['D', 'B', 'E', 'O', 'object'], ['D', 'A', 'O', 'object']])
+['Z', 'K1', 'K2', 'K3']+=merge([['A', 'B', 'C', 'O', 'object'], ['D', 'B', 'E', 'O', 'object'], ['D', 'A', 'O', 'object']])
 5 round:  A
 5 round:  A not candidate
 5 round:  D
-[['Z', 'K1', 'K2', 'K3', 'D']]+=merge([['A', 'B', 'C', 'O', 'object'], ['B', 'E', 'O', 'object'], ['A', 'O', 'object']])
+['Z', 'K1', 'K2', 'K3', 'D']+=merge([['A', 'B', 'C', 'O', 'object'], ['B', 'E', 'O', 'object'], ['A', 'O', 'object']])
 6 round:  A
-[['Z', 'K1', 'K2', 'K3', 'D', 'A']]+=merge([['B', 'C', 'O', 'object'], ['B', 'E', 'O', 'object'], ['O', 'object']])
+['Z', 'K1', 'K2', 'K3', 'D', 'A']+=merge([['B', 'C', 'O', 'object'], ['B', 'E', 'O', 'object'], ['O', 'object']])
 7 round:  B
-[['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B']]+=merge([['C', 'O', 'object'], ['E', 'O', 'object'], ['O', 'object']])
+['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B']+=merge([['C', 'O', 'object'], ['E', 'O', 'object'], ['O', 'object']])
 8 round:  C
-[['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C']]+=merge([['O', 'object'], ['E', 'O', 'object'], ['O', 'object']])
+['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C']+=merge([['O', 'object'], ['E', 'O', 'object'], ['O', 'object']])
 9 round:  O
 9 round:  O not candidate
 9 round:  E
-[['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E']]+=merge([['O', 'object'], ['O', 'object'], ['O', 'object']])
+['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E']+=merge([['O', 'object'], ['O', 'object'], ['O', 'object']])
 10 round:  O
-[['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E', 'O']]+=merge([['object'], ['object'], ['object']])
+['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E', 'O']+=merge([['object'], ['object'], ['object']])
 11 round:  object
-[['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E', 'O', 'object']]+=merge([])
+['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E', 'O', 'object']+=merge([])
 
 MRO[Z]=['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E', 'O', 'object']
 '''
@@ -247,6 +250,7 @@ In this case merge will be as following
 -------------
 CPL[Z]=[['Z'], MRO[K1], MRO[K2], MRO[K3], ['K1', 'K2', 'K3']]
 -------------
+[]+=merge([['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']])
 ['Z']+=merge([['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']])
 ['Z', 'K1']=([['A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K2', 'K3']])
 ['Z', 'K1', 'K2']+=merge([['A', 'B', 'C', 'O', 'object'], ['B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K3']])
