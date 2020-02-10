@@ -49,7 +49,7 @@ class ex_9:
 
 def merge(seqs):
     print("-------------")
-    print('CPL[{0}]=merge({1})'.format(seqs[0][0].__name__, [[c.__name__ for c in lc] for lc in seqs]))
+    print('CPL[{0}]={1}'.format(seqs[0][0].__name__, [[c.__name__ for c in lc] for lc in seqs]))
     print("-------------")
     res = []; i=0; cand = seqs[0][0]
     while 1:
