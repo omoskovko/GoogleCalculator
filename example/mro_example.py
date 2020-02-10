@@ -50,6 +50,9 @@ First example. Consider the following hierarchy:
 
 In this case the merge will be as
 -------------
+MRO[B]=['B', 'D', 'E', 'O', 'object']
+MRO[C]=['C', 'D', 'F', 'O', 'object']
+
 CPL[A]=[['A'], MRO[B], MRO[C], ['B', 'C']]
 -------------
 []+=merge([['A'], ['B', 'D', 'E', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['B', 'C']])
@@ -103,6 +106,9 @@ however even such a little modification completely changes the ordering of the h
 
 In this case the merge will be as
 -------------
+MRO[B]=['B', 'E', 'D', 'O', 'object']
+MRO[C]=['C', 'D', 'F', 'O', 'object']
+
 CPL[A]=[['A'], MRO[B], MRO[C], ['B', 'C']]
 -------------
 []+=merge([['A'], ['B', 'E', 'D', 'O', 'object'], ['C', 'D', 'F', 'O', 'object'], ['B', 'C']])
@@ -174,6 +180,10 @@ Here are the linearizations according to the C3 MRO (the reader should verify th
 -------------
 In this case merge will be as following
 -------------
+MRO[K1]=['K1', 'A', 'B', 'C', 'O', 'object']
+MRO[K2]=['K2', 'D', 'B', 'E', 'O', 'object']
+MRO[K3]=['K3', 'D', 'A', 'O', 'object']
+
 CPL[Z]=[['Z'], MRO[K1], MRO[K2], MRO[K3], ['K1', 'K2', 'K3']]
 -------------
 []+=merge([['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']])
@@ -248,6 +258,10 @@ order (MRO) for bases A, B, D
 -------------
 In this case merge will be as following
 -------------
+MRO[K1]=['K1', 'A', 'B', 'C', 'O', 'object']
+MRO[K2]=['K2', 'B', 'D', 'E', 'O', 'object']
+MRO[K3]=['K3', 'D', 'A', 'O', 'object']
+
 CPL[Z]=[['Z'], MRO[K1], MRO[K2], MRO[K3], ['K1', 'K2', 'K3']]
 -------------
 []+=merge([['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']])
