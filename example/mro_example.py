@@ -251,5 +251,8 @@ CPL[Z]=merge([['Z'], ['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E',
 ['Z', 'K1']=([['A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K2', 'K3']])
 ['Z', 'K1', 'K2']=merge([['A', 'B', 'C', 'O', 'object'], ['B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K3']])
 ['Z', 'K1', 'K2', 'K3']=merge([['A', 'B', 'C', 'O', 'object'], ['B', 'D', 'E', 'O', 'object'], ['D', 'A', 'O', 'object']])
-On this level error will be raised
+On this level error will be raised because:
+   A in ['D', 'A', 'O', 'object']
+   B in ['A', 'B', 'C', 'O', 'object']
+   D in ['B', 'D', 'E', 'O', 'object']
 '''
