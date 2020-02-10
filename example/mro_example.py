@@ -172,7 +172,7 @@ Here are the linearizations according to the C3 MRO (the reader should verify th
 -------------
 In this case merge will be as following
 -------------
-CPL[Z]+=merge([['Z'], MRO[K1], MRO[K2], MRO[K3], ['K1', 'K2', 'K3']])
+CPL[Z]=merge([['Z'], MRO[K1], MRO[K2], MRO[K3], ['K1', 'K2', 'K3']])
 -------------
 1 round:  Z
 [['Z']]+=merge([['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'D', 'B', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']])
@@ -245,7 +245,7 @@ order (MRO) for bases A, B, D
 -------------
 In this case merge will be as following
 -------------
-CPL[Z]+=merge([['Z'], MRO[K1], MRO[K2], MRO[K3], ['K1', 'K2', 'K3']])
+CPL[Z]=merge([['Z'], MRO[K1], MRO[K2], MRO[K3], ['K1', 'K2', 'K3']])
 -------------
 ['Z']+=merge([['K1', 'A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K1', 'K2', 'K3']])
 ['Z', 'K1']=([['A', 'B', 'C', 'O', 'object'], ['K2', 'B', 'D', 'E', 'O', 'object'], ['K3', 'D', 'A', 'O', 'object'], ['K2', 'K3']])
