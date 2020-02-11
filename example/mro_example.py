@@ -36,6 +36,38 @@ the left-to-right ordering specified in each class, that calls each parent only 
 Taken together, these properties make it possible to design reliable and extensible classes with multiple inheritance. 
 For more detail, see https://www.python.org/download/releases/2.3/mro/.
 
+
+The C3 Method Resolution Order
+https://www.python.org/download/releases/2.3/mro/
+Consider a class C in a multiple inheritance hierarchy, with C inheriting from the base classes B1, B2, ... , BN. 
+We want to compute the linearization L[C] of the class C. The rule is the following:
+
+    the linearization of C is the sum of C plus the merge of the linearizations of the parents and the list of the parents.
+
+In symbolic notation:
+
+    L[C(B1 ... BN)] = C + merge(L[B1] ... L[BN], B1 ... BN)
+
+In particular, if C is the object class, which has no parents, the linearization is trivial:
+
+    L[object] = object.
+
+However, in general one has to compute the merge according to the following prescription:
+
+    take the head of the first list, i.e L[B1][0]; if this head is not in the tail of any of the other lists, 
+    then add it to the linearization of C and remove it from the lists in the merge, 
+    otherwise look at the head of the next list and take it, if it is a good head. 
+    Then repeat the operation until all the class are removed or it is impossible to find good heads. 
+    In this case, it is impossible to construct the merge, Python 2.3 will refuse to create the class C and will raise an exception.
+
+This prescription ensures that the merge operation preserves the ordering, 
+if the ordering can be preserved. On the other hand, if the order cannot be preserved 
+(as in the example of serious order disagreement discussed above) then the merge cannot be computed.
+
+The computation of the merge is trivial if C has only one parent (single inheritance); in this case
+
+    L[C(B)] = C + merge(L[B],B) = C + L[B]
+
 Examples
 
 First example. Consider the following hierarchy:
