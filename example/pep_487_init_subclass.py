@@ -67,12 +67,12 @@ class MainHgRepository(Repository, scm_type="main"):
 main = Repository['main']()
 print(type(main))
 
-class GenericGitRepository(Repository, scm_type="main"):
+class GenericGitRepository(Repository, scm_type="GIT"):
     pass
 
 rep = Repository()
 
 print(Repository._registry)
 
-main = Repository['main']()
+main = Repository['GIT']()
 print(type(main))
