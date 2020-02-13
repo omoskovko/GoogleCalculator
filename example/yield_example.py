@@ -1,3 +1,7 @@
+'''
+https://www.python.org/dev/peps/pep-0342/
+'''
+
 import inspect
 from collections import OrderedDict
 
@@ -87,8 +91,47 @@ print("t={0}".format(t))
 #print(dir(test_wrap.test_name))
 
 test_wrap.stop_gen()
-print(test_wrap.test_name())
 
 print("- step 3 --------------")
-print(test_wrap.my_test("aaaaaaaaaaa"))
+#print(test_wrap.test_name())
+print(test_wrap.my_test(test_wrap.test_name()))
 test_wrap.stop_gen()
+
+'''
+ @contextlib.contextmanager
+
+    This function is a decorator that can be used to define a factory function for with statement context managers, 
+    without needing to create a class or separate __enter__() and __exit__() methods.
+
+    While many objects natively support use in with statements, sometimes a resource needs to be managed 
+    that isn't a context manager in its own right, and doesn't implement a close() method for use with contextlib.closing
+
+    The function being decorated must return a generator-iterator when called. 
+    This iterator must yield exactly one value, which will be bound to the targets in the with statement's as clause, if any.
+'''
+
+import contextlib
+
+@contextlib.contextmanager
+def transaction():
+    print('begin')
+    try:
+        yield from do_it()
+    except:
+        print('rollback')
+        raise
+    else:
+        print('commit')
+
+def do_it():
+    print('Refactored initial setup')
+    yield # Body of with-statement is executed here
+    print('Refactored finalization of successful transaction')
+
+def gene():
+    for i in range(2):
+        with transaction():
+            yield i
+
+for i in gene():
+    print('main: i =', i)
