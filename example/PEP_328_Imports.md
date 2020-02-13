@@ -1,5 +1,5 @@
+https://www.python.org/dev/peps/pep-0328/
 `
-[https://www.python.org/dev/peps/pep-0328/]
 PEP:	328
 Title:	Imports: Multi-Line and Absolute/Relative
 Author:	Aahz <aahz at pythoncraft.com>
