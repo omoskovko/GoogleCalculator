@@ -29,12 +29,28 @@ from typing import TypeVar, Generic
 MyInt = TypeVar('MyInt')
 S = TypeVar('S')
 
-class MyClass(Generic[MyInt, S]):
+class MyClass(Generic[MyInt]):
     def meth_1(self, x: MyInt) -> MyInt:  # T here
         return x
-    def meth_2(self, x: S) -> S:  # and here are always the same
+    def meth_2(self, x: MyInt) -> MyInt:  # and here are always the same
         return x
 
-a = MyClass()  # type: MyClass[int, str]
+a = MyClass()  # type: MyClass[int]
 a.meth_1(1)    # OK
 a.meth_2("a")  # This is an error!
+
+
+from typing import Generic, TypeVar, Any
+
+T = TypeVar('T')
+#S = TypeVar('S')
+U = TypeVar('U')
+
+class One(Generic[T]): pass
+class Another(Generic[T]): pass
+
+class First(One[T], Another[S]): pass
+class Second(One[T], Another[S], Generic[S, U, T]): pass
+
+x: First[int, str]        # Here T is bound to int, S is bound to str
+y: Second[int, str, Any]  # Here T is Any, S is int, and U is str
