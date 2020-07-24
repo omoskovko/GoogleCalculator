@@ -1,5 +1,10 @@
 import pytest
-from .common.project_data import CalcData
+from common.project_data import CalcData
+from conftest import option
+
+@pytest.fixture(params=[v for v in range(int(option.testLoops))])
+def test_loops(request):
+    return request.param
 
 class TestCalc:
     @pytest.fixture(autouse=True)
@@ -22,7 +27,7 @@ class TestCalc:
     @pytest.mark.parametrize("test_id", 
         ["test_ln_calc", "test_plus_calc", "test_multy_calc", pytest.param("test_long_calc", marks=pytest.mark.xfail)]
     )
-    def test_google_calc(self, resource_handler, test_id):
+    def test_google_calc(self, test_loops, resource_handler, test_id):
         calc_str = CalcData.calcDict[test_id][0]
         check_res = CalcData.calcDict[test_id][1]
 
