@@ -4,8 +4,8 @@ import sys
 import inspect
 import re
 
-from .common.utils import get_driver
-from .common.google_one_box import GoogleOneBox
+from common.utils import get_driver
+from common.google_one_box import GoogleOneBox
 
 def get_out_path(*dirList):
     mainFileName = inspect.stack()[0][1]
@@ -47,6 +47,14 @@ def pytest_runtest_makereport(item, call):
     
 def pytest_addoption(parser):
     parser.addoption("--driver", action="store", default="Firefox", help="WEB Driver name")
+    parser.addoption("--testLoops", action="store", default=1, help="Count of suite loops")
+
+option = None
+
+
+def pytest_configure(config):
+    global option
+    option = config.option
 
 @pytest.fixture(scope="session")
 def resource_handler(request):
