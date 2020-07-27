@@ -16,11 +16,13 @@ class TestCalc:
           http://doc.pytest.org/en/latest/fixture.html#autouse-fixtures-xunit-setup-on-steroids
         '''
         print("SetUp function {0}".format(request.function.__name__))
+        print(request.keywords.node.funcargs.keys())
         resource_handler.clear_result()
 
         yield
 
         print("TearDown function {0}".format(request.function.__name__))
+        print(request.keywords.node.funcargs.keys())
         resource_handler.clear_result()
         
 
