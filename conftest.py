@@ -56,6 +56,13 @@ def pytest_configure(config):
     global option
     option = config.option
 
+    class Plugin:
+        @pytest.fixture(scope="session", params=[v for v in range(int(config.option.testLoops))])
+        def test_loops(self, request):
+            return request.param
+
+    config.pluginmanager.register(Plugin())
+
 @pytest.fixture(scope="session")
 def resource_handler(request):
     googleBox = GoogleOneBox(get_driver(request.config.option.driver), 'https://www.google.com')
