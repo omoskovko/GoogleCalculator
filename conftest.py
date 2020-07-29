@@ -81,3 +81,24 @@ def resource_handler(request):
     request.addfinalizer(fin)
     return rh
     '''
+
+@pytest.fixture(autouse=True)
+def process_func(request, resource_handler):
+    '''
+      The class-level process_func fixture is marked with autouse=true which implies 
+      that all test methods in the class will use this fixture without a need to state it 
+      in the test function signature or with a class-level usefixtures decorator.
+      http://doc.pytest.org/en/latest/fixture.html#autouse-fixtures-xunit-setup-on-steroids
+    '''
+    if request.node.get_closest_marker("setup_func"):
+        print("SetUp function {0}".format(request.function.__name__))
+        print(request.keywords.node.funcargs.keys())
+        resource_handler.clear_result()
+
+    yield
+
+    if request.node.get_closest_marker("setup_func"):
+        print("TearDown function {0}".format(request.function.__name__))
+        print(request.keywords.node.funcargs.keys())
+        resource_handler.clear_result()
+
