@@ -2,10 +2,6 @@ import pytest
 from common.project_data import CalcData
 from conftest import option
 
-@pytest.fixture(params=[v for v in range(int(option.testLoops))])
-def test_loops(request):
-    return request.param
-
 class TestCalc:
     @pytest.mark.parametrize("test_id", 
         [pytest.param("test_ln_calc", marks=pytest.mark.setup_func), "test_plus_calc", "test_multy_calc", 
