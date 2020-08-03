@@ -32,7 +32,7 @@ jobs:
         tar -xvzf geckodriver*
         chmod 755 geckodriver
         sudo mv geckodriver /usr/bin/geckodriver
-        wget https://chromedriver.storage.googleapis.com/85.0.4183.38/chromedriver_linux64.zip
+        wget https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/bin/chromedriver
         sudo chmod 755 /usr/bin/chromedriver
