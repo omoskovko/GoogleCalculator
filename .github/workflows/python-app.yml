@@ -22,12 +22,15 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       run: |
-        sudo apt-get install firefox
         uname -p
-        wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz
-        tar -xvzf geckodriver*
-        chmod 755 geckodriver
-        sudo cp geckodriver /usr/local/bin/
+        sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+        sudo echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+        sudo apt-get -y update
+        sudo apt-get -y install google-chrome-stable
+        wget https://chromedriver.storage.googleapis.com/85.0.4183.38/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        sudo mv chromedriver /usr/bin/chromedriver
+        sudo chmod 755 /usr/bin/chromedriver
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
@@ -39,4 +42,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest
+        pytest --driver=Chrome
