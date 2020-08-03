@@ -4,8 +4,8 @@ import sys
 import inspect
 import re
 
-from common.utils import get_driver
-from common.google_one_box import GoogleOneBox
+from .common.utils import get_driver
+from .common.google_one_box import GoogleOneBox
 
 def get_out_path(*dirList):
     mainFileName = inspect.stack()[0][1]
