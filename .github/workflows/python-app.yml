@@ -23,7 +23,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get install firefox
-        wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
+        uname -p
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz
         tar -xvzf geckodriver*
         chmod 755 geckodriver
         sudo cp geckodriver /usr/local/bin/
