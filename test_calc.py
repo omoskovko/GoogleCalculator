@@ -1,5 +1,5 @@
 import pytest
-from common.project_data import CalcData
+from .common.project_data import CalcData
 from conftest import option
 
 class TestCalc:
