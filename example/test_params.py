@@ -20,6 +20,6 @@ def y(request, test_with_params):
 
 @pytest.mark.parametrize("test_x, y", [("a", "b")], indirect=["y"])
 def test_indirect(test_x, y):
-    assert y == "b"
-    assert test_x == "aaa"
+    assert y == "bb"
+    assert test_x == "a"
 
