@@ -12,7 +12,7 @@ def get_driver(dProfile='Chrome'):
     webDrivers["Firefox"] = webdriver.Firefox
         
     if dProfile == "Chrome":
-        driver = webDrivers[dProfile](chrome_options=options)
+        driver = webDrivers[dProfile](options=options)
     else:
         driver = webDrivers[dProfile]()
         
