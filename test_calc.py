@@ -1,6 +1,6 @@
 import pytest
 from .common.project_data import CalcData
-from conftest import option
+from .conftest import option
 
 class TestCalc:
     @pytest.mark.parametrize("test_id", 
