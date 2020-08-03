@@ -66,7 +66,7 @@ def pytest_configure(config):
 
 @pytest.fixture(scope="session")
 def resource_handler(request):
-    display = Display(visible=0, size=(1280, 720))
+    #display = Display(visible=0, size=(1280, 720))
     
     googleBox = GoogleOneBox(get_driver(request.config.option.driver), 'https://www.google.com')
     rh = googleBox.search_for("1+2=")
@@ -80,7 +80,7 @@ def resource_handler(request):
     except Exception as err:
         print(err)
         
-    display.stop()
+    #display.stop()
 
     '''
     According to http://doc.pytest.org/en/latest/fixture.html#fixture-finalization-executing-teardown-code use of addfinalizer is "historical".
