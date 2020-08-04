@@ -1,6 +1,8 @@
 ![Python application](https://github.com/omoskovko/GoogleCalculator/workflows/Python%20application/badge.svg)
 
 # GoogleCalculator
+Pytest project with test cases for Google Calculator
+
 
 # Dependencies
 Chrome - https://www.google.com/chrome/ 
