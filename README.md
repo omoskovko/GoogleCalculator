@@ -15,4 +15,5 @@ Firefox - https://www.mozilla.org/en-US/firefox/new/
 
 pip install -r requirements.txt
 pytest --junitxml=test.xml [--driver=WebDriver]
+#                              where WebDriver is Chrome or Firefox
 ```
