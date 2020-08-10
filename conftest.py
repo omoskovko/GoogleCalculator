@@ -22,17 +22,20 @@ def pytest_runtest_makereport(item, call):
     rep = outcome.get_result()
     
     # we only look at actual failing test calls, not setup/teardown
-    if rep.when == "call" and rep.failed:
-        p = re.compile('(\:|\(|\)|\.)')
-        #outPngFile = get_out_path(rep.nodeid.replace(":", "_").replace("(", "_").replace(")", "_").replace(".", "_")+".png")
-        outPngFile = get_out_path(p.sub(':', rep.nodeid).split(":")[-1]+".png")
-        #print("Failed test is: "+outPngFile)
+    if rep.when == "call":
+        xfail = hasattr(rep, 'wasxfail')
+        if xfail or rep.failed:
+            p = re.compile('(\:|\(|\)|\.)')
+            #outPngFile = get_out_path(rep.nodeid.replace(":", "_").replace("(", "_").replace(")", "_").replace(".", "_")+".png")
+            outPngFile = get_out_path(p.sub(':', rep.nodeid).split(":")[-1]+".png")
+            #print("Failed test is: "+outPngFile)
         
-        try:
-            if "resource_handler" in item.fixturenames:
-                item.funcargs["resource_handler"]._driver.get_screenshot_as_file(outPngFile)
-        except Exception as err:
-            print(err)
+            try:
+                if "resource_handler" in item.fixturenames:
+                    item.funcargs["resource_handler"]._driver.get_screenshot_as_file(outPngFile)
+            except Exception as err:
+                print(err)
+
 
 '''        
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
