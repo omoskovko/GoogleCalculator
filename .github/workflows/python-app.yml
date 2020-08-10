@@ -51,3 +51,8 @@ jobs:
     - name: Test with pytest Chrome
       run: |
         pytest -v --driver=Chrome --headless
+    - name: Upload Chrome result
+      uses: actions/upload-artifact@v2
+      with:
+        name: output
+        path: output.png/*.*
