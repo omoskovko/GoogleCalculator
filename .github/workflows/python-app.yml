@@ -48,11 +48,16 @@ jobs:
     - name: Test with default pytest
       run: |
         pytest -v --headless
+    - name: Upload Firefox result
+      uses: actions/upload-artifact@v2
+      with:
+        name: firefox_output
+        path: output.png/*.*
     - name: Test with pytest Chrome
       run: |
         pytest -v --driver=Chrome --headless
     - name: Upload Chrome result
       uses: actions/upload-artifact@v2
       with:
-        name: output
+        name: chrome_output
         path: output.png/*.*
