@@ -53,22 +53,13 @@ def pytest_addoption(parser):
     parser.addoption("--testLoops", action="store", default=1, help="Count of suite loops")
     parser.addoption("--headless", action="store_true", default=False, help="Use headless parameter")
 
-option = None
-
-
+    
 def pytest_configure(config):
-    global option
-    option = config.option
-
     class Plugin:
         @pytest.fixture(scope="session", params=[v for v in range(int(config.option.testLoops))])
         def test_loops(self, request):
             return request.param
         
-        @pytest.fixture(scope="session")
-        def get_headless(self, request):
-            return config.option.headless        
-
     config.pluginmanager.register(Plugin())
 
 @pytest.fixture(scope="session")
