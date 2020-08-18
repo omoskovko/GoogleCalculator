@@ -63,9 +63,10 @@ def pytest_configure(config):
     config.pluginmanager.register(Plugin())
 
 @pytest.fixture(scope="session")
-def resource_handler(request, get_headless):
+def resource_handler(request):
     
-    googleBox = GoogleOneBox(get_driver(get_headless, request.config.option.driver), 'https://www.google.com')
+    googleBox = GoogleOneBox(get_driver(request.config.option.headless, 
+                                        request.config.option.driver), 'https://www.google.com')
     rh = googleBox.search_for("1+2=")
 
     # The current best practice for setup and teardown is to use yield
