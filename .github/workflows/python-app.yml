@@ -28,11 +28,12 @@ jobs:
         sudo apt-get -y update
         sudo apt-get -y install firefox
         sudo apt-get -y install google-chrome-stable
+        sudo apt-get -y curl
         wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
         tar -xvzf geckodriver*
         chmod 755 geckodriver
         sudo mv geckodriver /usr/bin/geckodriver
-        wget https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
+        wget https://chromedriver.storage.googleapis.com/$(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/bin/chromedriver
         sudo chmod 755 /usr/bin/chromedriver
