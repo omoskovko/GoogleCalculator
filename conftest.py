@@ -7,6 +7,12 @@ import re
 from .common.utils import get_driver
 from .common.google_one_box import GoogleOneBox
 
+def determine_scope(fixture_name, config):
+    # https://docs.pytest.org/en/stable/fixture.html#dynamic-scope
+    if config.option.session:
+        return "session"
+    return "function"
+
 def get_out_path(*dirList):
     mainFileName = inspect.stack()[0][1]
     currOutFolder = 'output.png'
@@ -52,17 +58,18 @@ def pytest_addoption(parser):
     parser.addoption("--driver", action="store", default="Firefox", help="WEB Driver name")
     parser.addoption("--testLoops", action="store", default=2, help="Count of suite loops")
     parser.addoption("--headless", action="store_true", default=False, help="Use headless parameter")
+    parser.addoption("--session", action="store_true", default=False, help="Use headless parameter")
 
     
 def pytest_configure(config):
     class Plugin:
-        @pytest.fixture(scope="session", params=[v for v in range(int(config.option.testLoops))])
+        @pytest.fixture(scope=determine_scope, params=[v for v in range(int(config.option.testLoops))])
         def test_loops(self, request):
             return request.param
         
     config.pluginmanager.register(Plugin())
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope=determine_scope)
 def resource_handler(request):
     
     googleBox = GoogleOneBox(get_driver(request.config.option.headless, 
