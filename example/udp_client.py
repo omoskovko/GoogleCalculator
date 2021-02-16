@@ -1,6 +1,5 @@
 import socket
 import select
-from contextlib import closing
 
 import threading
 import time
@@ -34,9 +33,6 @@ class V2XDataClient:
     def get_items(self):
         return self.list
     
-with open("/edge-components/simulators/J2735_packet_generator/data/SPAT_RSU4.1.bin", "rb") as f:
-    spat_orig_msg = f.read()
-
 si = V2XDataClient()
 with si as s:
     p = threading.Thread(target=si.get_sock_data, args=(0.5,))
