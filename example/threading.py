@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.DEBUG,
 def consumer(cv):
     logging.debug('Consumer thread started ...')
     with cv:
-    	logging.debug('Consumer waiting ...')
+        logging.debug('Consumer waiting ...')
         cv.wait()
         logging.debug('Consumer consumed the resource')
 
