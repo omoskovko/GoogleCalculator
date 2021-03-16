@@ -21,6 +21,8 @@ jobs:
       with:
         python-version: 3.8
     - name: Install dependencies
+      env:
+        GECKO_VERSION: $(curl https://github.com/mozilla/geckodriver/releases/latest | sed -e 's/^.*href=\"\([^\"]*\)\".*$/\1/;s/^.*\/\([^\/]*$\)/\1/')
       run: |
         uname -p
         wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -29,7 +31,7 @@ jobs:
         sudo apt-get -y install firefox
         sudo apt-get -y install google-chrome-stable
         sudo apt-get -y install curl
-        wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
+        wget https://github.com/mozilla/geckodriver/releases/download/${{ env.GECKO_VERSION }}/geckodriver-${{ env.GECKO_VERSION }}-linux64.tar.gz
         tar -xvzf geckodriver*
         chmod 755 geckodriver
         sudo mv geckodriver /usr/bin/geckodriver
