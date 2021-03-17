@@ -21,9 +21,6 @@ jobs:
       with:
         python-version: 3.8
     - name: Install dependencies
-      env:
-        GECKO_VERSION: $(curl https://github.com/mozilla/geckodriver/releases/latest | sed -e 's/^.*href=\"\([^\"]*\)\".*$/\1/;s/^.*\/\([^\/]*$\)/\1/')
-        CHROMEDRIVER_VER: $(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
       run: |
         uname -p
         wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -32,11 +29,11 @@ jobs:
         sudo apt-get -y install firefox
         sudo apt-get -y install google-chrome-stable
         sudo apt-get -y install curl
-        wget https://github.com/mozilla/geckodriver/releases/download/${{ env.GECKO_VERSION }}/geckodriver-${{ env.GECKO_VERSION }}-linux64.tar.gz
+        wget $(curl -s 'https://api.github.com/repos/mozilla/geckodriver/releases/latest' | sed -n '/content_type/!b;:a;/browser_download_url/!{$!{N;ba}};{/application\/x\-gzip/p}'|sed -e 's/^[^:]*: *\"\(http[^\"]*\).*/\1/'|grep linux64)
         tar -xvzf geckodriver*
         chmod 755 geckodriver
         sudo mv geckodriver /usr/bin/geckodriver
-        wget https://chromedriver.storage.googleapis.com/${{ env.CHROMEDRIVER_VER }}/chromedriver_linux64.zip
+        wget https://chromedriver.storage.googleapis.com/$(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/bin/chromedriver
         sudo chmod 755 /usr/bin/chromedriver
