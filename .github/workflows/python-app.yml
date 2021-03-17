@@ -23,6 +23,7 @@ jobs:
     - name: Install dependencies
       env:
         GECKO_VERSION: $(curl https://github.com/mozilla/geckodriver/releases/latest | sed -e 's/^.*href=\"\([^\"]*\)\".*$/\1/;s/^.*\/\([^\/]*$\)/\1/')
+        CHROMEDRIVER_VER: $(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
       run: |
         uname -p
         wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -35,7 +36,7 @@ jobs:
         tar -xvzf geckodriver*
         chmod 755 geckodriver
         sudo mv geckodriver /usr/bin/geckodriver
-        wget https://chromedriver.storage.googleapis.com/$(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
+        wget https://chromedriver.storage.googleapis.com/${{ env.CHROMEDRIVER_VER }}/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/bin/chromedriver
         sudo chmod 755 /usr/bin/chromedriver
