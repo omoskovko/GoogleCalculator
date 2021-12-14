@@ -17,9 +17,13 @@ class MyHookimpl(object):
 
             self.__dict__[hookfunc.__name__] = None  # (val, gen)
             self.func_regs[hookfunc.__name__] = (hookfunc, None)
-        return hookfunc
 
-    def init_gen(self, gen_name):
+            def run_one_gen(*arc, **kwargv):
+                return self.__init_gen(hookfunc, *arc, **kwargv)[0]
+
+        return run_one_gen
+
+    def __init_gen(self, gen_name, *arc, **kwargv):
         if not gen_name.__name__ in self.func_regs:
             raise Exception("{0} is not found".format(gen_name.__name__))
 
@@ -29,13 +33,20 @@ class MyHookimpl(object):
             return val, gen
 
         args = gen_name.__code__.co_varnames[: gen_name.__code__.co_argcount]
-        res = {v: self.__dict__[v] for v in self.__dict__ if v in args}
+        res = {
+            v: self.__dict__[v] for v in self.__dict__ if v in args[len(arc) :]
+        }
 
         for f_name in [v for v in res if res[v] is None]:
-            val, gen = self.init_gen(self.func_regs[f_name][0])
+            val, gen = self.__init_gen(self.func_regs[f_name][0])
             self.__dict__[f_name] = val
             res[f_name] = val
 
+        arc_dict = {}
+        for i in range(len(arc)):
+            arc_dict[args[i]] = arc[i]
+
+        res = dict(res, **arc_dict, **kwargv)
         gen = gen_name(**res)
         val = next(gen)
         self.__dict__[gen_name.__name__] = val
@@ -45,9 +56,9 @@ class MyHookimpl(object):
     def run_gen(self, gname=None):
         if gname is None:
             for gen_name in self.func_regs:
-                print(self.init_gen(self.func_regs[gen_name][0])[0])
+                print(self.__init_gen(self.func_regs[gen_name][0])[0])
         else:
-            print(self.init_gen(gname)[0])
+            print(self.__init_gen(gname)[0])
 
     def stop_gen(self, gen_name=None):
         # Here TearDown will be invoked
@@ -64,7 +75,9 @@ class MyHookimpl(object):
         for i in range(reg_dict_len):
             fname, (func, gen) = gen_dict.popitem()
 
-            # for val, g in reversed(self.func_regs.values()):
+            if not gen:
+                continue
+
             try:
                 gen.send(None)
                 err = Exception("{0} has second yield".format(fname))
@@ -107,7 +120,16 @@ def my_next_test(my_test, test_name):
     print("---------------------")
 
 
-test_wrap.run_gen()
+print(my_next_test("one param", "second param"))
+test_wrap.stop_gen()
+
+print(my_next_test(test_name="test_name param"))
+test_wrap.stop_gen()
+
+print(my_next_test("one param"))
+test_wrap.stop_gen()
+
+print(my_next_test())
 test_wrap.stop_gen()
 
 '''
