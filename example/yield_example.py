@@ -19,25 +19,35 @@ class MyHookimpl(object):
             self.func_regs[hookfunc.__name__] = (hookfunc, None)
         return hookfunc
 
-    def run_gen(self, gen_name):
+    def init_gen(self, gen_name):
         if not gen_name.__name__ in self.func_regs:
             raise Exception("{0} is not found".format(gen_name.__name__))
 
         if self.__dict__[gen_name.__name__] is not None:
-            return self.__dict__[gen_name.__name__]
+            _, gen = self.func_regs[gen_name.__name__]
+            val = self.__dict__[gen_name.__name__]
+            return val, gen
 
         args = gen_name.__code__.co_varnames[: gen_name.__code__.co_argcount]
         res = {v: self.__dict__[v] for v in self.__dict__ if v in args}
 
         for f_name in [v for v in res if res[v] is None]:
-            val, gen = self.run_gen(self.func_regs[f_name][0])
+            val, gen = self.init_gen(self.func_regs[f_name][0])
             self.__dict__[f_name] = val
             res[f_name] = val
 
         gen = gen_name(**res)
         val = next(gen)
+        self.__dict__[gen_name.__name__] = val
         self.func_regs[gen_name.__name__] = (gen_name, gen)
         return val, gen
+
+    def run_gen(self, gname=None):
+        if gname is None:
+            for gen_name in self.func_regs:
+                self.init_gen(self.func_regs[gen_name][0])
+        else:
+            self.init_gen(gname)
 
     def stop_gen(self, gen_name=None):
         # Here TearDown will be invoked
@@ -66,6 +76,7 @@ class MyHookimpl(object):
 
 
 test_wrap = MyHookimpl()
+
 
 @test_wrap
 def test_name():
@@ -96,8 +107,7 @@ def my_next_test(my_test, test_name):
     print("---------------------")
 
 
-t = test_wrap.run_gen(my_next_test)[0]
-print("t={0}".format(t))
+test_wrap.run_gen()
 test_wrap.stop_gen()
 
 '''
