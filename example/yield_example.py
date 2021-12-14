@@ -1,58 +1,72 @@
-'''
+"""
 https://www.python.org/dev/peps/pep-0342/
-'''
+"""
 
 import inspect
 from collections import OrderedDict
+
 
 class MyHookimpl(object):
     def __init__(self):
         self.func_regs = OrderedDict()
 
     def __call__(self, hookfunc):
-        def hook_func(*arc, **kwargs):
-            if not hookfunc.__name__ in self.func_regs:
-                if not inspect.isgeneratorfunction(hookfunc):
-                   raise Exception("{0} has no yield".format(hookfunc.__name__))
+        if not hookfunc.__name__ in self.func_regs:
+            if not inspect.isgeneratorfunction(hookfunc):
+                raise Exception("{0} has no yield".format(hookfunc.__name__))
 
-                gen = hookfunc(*arc, **kwargs)
-                val = next(gen)
-                self.__dict__[hookfunc.__name__] = val #(val, gen)
-                self.func_regs[hookfunc.__name__] = (gen, hook_func)
+            self.__dict__[hookfunc.__name__] = None  # (val, gen)
+            self.func_regs[hookfunc.__name__] = (hookfunc, None)
+        return hookfunc
 
-            return self.__dict__[hookfunc.__name__]
+    def run_gen(self, gen_name):
+        if not gen_name.__name__ in self.func_regs:
+            raise Exception("{0} is not found".format(gen_name.__name__))
 
-        self.__dict__[hookfunc.__name__] = hook_func
-        return hook_func
+        if self.__dict__[gen_name.__name__] is not None:
+            return self.__dict__[gen_name.__name__]
+
+        args = gen_name.__code__.co_varnames[: gen_name.__code__.co_argcount]
+        res = {v: self.__dict__[v] for v in self.__dict__ if v in args}
+
+        for f_name in [v for v in res if res[v] is None]:
+            val, gen = self.run_gen(self.func_regs[f_name][0])
+            self.__dict__[f_name] = val
+            res[f_name] = val
+
+        gen = gen_name(**res)
+        val = next(gen)
+        self.func_regs[gen_name.__name__] = (gen_name, gen)
+        return val, gen
 
     def stop_gen(self, gen_name=None):
-          # Here TearDown will be invoked
-          err = None
-          gen_dict = OrderedDict()
+        # Here TearDown will be invoked
+        err = None
+        gen_dict = OrderedDict()
 
-          if gen_name:
-              gen, func = self.func_regs.pop(gen_name)
-              gen_dict[gen_name] = (gen, func)
-          else:
-              gen_dict = self.func_regs
+        if gen_name:
+            func, gen = self.func_regs.pop(gen_name)
+            gen_dict[gen_name] = (func, gen)
+        else:
+            gen_dict = self.func_regs
 
-          reg_dict_len = len(gen_dict)
-          for i in range(reg_dict_len):
-              fname, (gen, func) = gen_dict.popitem()
+        reg_dict_len = len(gen_dict)
+        for i in range(reg_dict_len):
+            fname, (func, gen) = gen_dict.popitem()
 
-          #for val, g in reversed(self.func_regs.values()):
-              try:
-                  gen.send(None)
-                  err = Exception("{0} has second yield".format(fname))
-              except StopIteration:
-                  del self.__dict__[fname]
-                  self.__dict__[fname] = func
-          if err:
-             raise err
+            # for val, g in reversed(self.func_regs.values()):
+            try:
+                gen.send(None)
+                err = Exception("{0} has second yield".format(fname))
+            except StopIteration:
+                del self.__dict__[fname]
+                self.__dict__[fname] = func
+        if err:
+            raise err
+
 
 test_wrap = MyHookimpl()
 
-print("-- Def --")
 @test_wrap
 def test_name():
     print("---------------------")
@@ -60,41 +74,30 @@ def test_name():
     yield "Basic value"
     print("TearDown test_name")
     print("---------------------")
-    
+
+
 @test_wrap
-def my_test(param1):
+def my_test(test_name):
     print("---------------------")
     print("SetUp my_test")
-    val = "My test value is: " + param1
+    val = f"My test value is: {test_name}"
     yield val
     print("TearDown my_test")
     print("---------------------")
-    
+
+
 @test_wrap
-def my_next_test(param1, param2):
+def my_next_test(my_test, test_name):
     print("---------------------")
     print("SetUp my_next_test")
-    val = param1 + " - " + param2
+    val = test_name + " - " + my_test
     yield val
     print("TearDown my_next_test")
     print("---------------------")
 
-print("-- End Def --")
-print("- step 1 --------------")
-t = test_wrap.my_test("Test global")
+
+t = test_wrap.run_gen(my_next_test)[0]
 print("t={0}".format(t))
-print(test_wrap.test_name())
-
-print("- step 2 --------------")
-t = my_test("aaaaaaaaaa")
-print("t={0}".format(t))
-#print(dir(test_wrap.test_name))
-
-test_wrap.stop_gen()
-
-print("- step 3 --------------")
-#print(test_wrap.test_name())
-print(test_wrap.my_test(test_wrap.test_name()))
 test_wrap.stop_gen()
 
 '''
