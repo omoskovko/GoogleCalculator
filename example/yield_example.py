@@ -58,7 +58,7 @@ class MyHookimpl(object):
             func, gen = self.func_regs.pop(gen_name)
             gen_dict[gen_name] = (func, gen)
         else:
-            gen_dict = self.func_regs
+            gen_dict = self.func_regs.copy()
 
         reg_dict_len = len(gen_dict)
         for i in range(reg_dict_len):
@@ -69,8 +69,8 @@ class MyHookimpl(object):
                 gen.send(None)
                 err = Exception("{0} has second yield".format(fname))
             except StopIteration:
-                del self.__dict__[fname]
-                self.__dict__[fname] = func
+                self.__dict__[fname] = None  # (val, gen)
+                self.func_regs[fname] = (func, None)
         if err:
             raise err
 
