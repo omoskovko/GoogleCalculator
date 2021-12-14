@@ -45,9 +45,9 @@ class MyHookimpl(object):
     def run_gen(self, gname=None):
         if gname is None:
             for gen_name in self.func_regs:
-                self.init_gen(self.func_regs[gen_name][0])
+                print(self.init_gen(self.func_regs[gen_name][0])[0])
         else:
-            self.init_gen(gname)
+            print(self.init_gen(gname)[0])
 
     def stop_gen(self, gen_name=None):
         # Here TearDown will be invoked
