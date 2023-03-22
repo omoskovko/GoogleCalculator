@@ -1,4 +1,4 @@
-'''
+"""
 https://www.python.org/dev/peps/pep-0487/
 PEP:	487
 Title:	Simpler customisation of class creation
@@ -26,25 +26,30 @@ The first two categories can easily be achieved by having simple hooks into the 
 The third category is the topic of another PEP, PEP 520.
 
 As an example, the first use case looks as follows:
-'''
+"""
+
 
 class QuestBase:
-   swallow= []
-   # this is implicitly a @classmethod (see below for motivation)
-   def __init_subclass__(cls, swallow, **kwargs):
-       super().__init_subclass__(**kwargs)
-       cls.swallow.append(swallow)
+    swallow = []
+
+    # this is implicitly a @classmethod (see below for motivation)
+    def __init_subclass__(cls, swallow, **kwargs):
+        super().__init_subclass__(**kwargs)
+        cls.swallow.append(swallow)
+
 
 class Quest(QuestBase, swallow="african"):
-   pass
+    pass
+
 
 class Amr(QuestBase, swallow="amr"):
-   pass
+    pass
+
 
 print(QuestBase.swallow)
 
 
-class Repository():
+class Repository:
     _registry = {}
 
     def __init_subclass__(cls, scm_type=None, **kwargs):
@@ -61,18 +66,22 @@ class Repository():
             # construct a new type using the given base class and also remember the attribute for future instantiations
             return cls._registry[base]
 
+
 class MainHgRepository(Repository, scm_type="main"):
     pass
 
-main = Repository['main']()
+
+main = Repository["main"]()
 print(type(main))
+
 
 class GenericGitRepository(Repository, scm_type="GIT"):
     pass
+
 
 rep = Repository()
 
 print(Repository._registry)
 
-main = Repository['GIT']()
+main = Repository["GIT"]()
 print(type(main))

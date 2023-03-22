@@ -3,10 +3,11 @@ import time
 import atexit
 import signal
 
+
 class createDaemon(object):
     def __init__(self, do_fork=True):
-        """ 
-            This function create a service/Daemon that will execute a det. task
+        """
+        This function create a service/Daemon that will execute a det. task
         """
 
         self.msg = "Test msg %d"
@@ -18,19 +19,19 @@ class createDaemon(object):
                 f.write(f"{self.pid}|{os.getpid()}\n")
 
                 if self.pid == 0:
-                    print('PID: %d' % self.pid)
+                    print("PID: %d" % self.pid)
                     if not do_fork:
                         os._exit(0)
-            
+
         except OSError as error:
-            print('Unable to fork. Error: %d (%s)' % (error.errno, error.strerror))
+            print("Unable to fork. Error: %d (%s)" % (error.errno, error.strerror))
             os._exit(1)
 
         self.doTask()
 
     def doTask(self):
-        """ 
-            This function create a task that will be a daemon
+        """
+        This function create a task that will be a daemon
         """
 
         def signal_cb(s, f):
@@ -53,8 +54,7 @@ class createDaemon(object):
             i += 1
 
 
-if __name__ == '__main__':
-
+if __name__ == "__main__":
     # Create the Daemon
     cdem = createDaemon(True)
     slave_pid = None

@@ -1,4 +1,4 @@
-'''
+"""
 https://www.python.org/dev/peps/pep-0201/
 PEP:	201
 Title:	Lockstep Iteration
@@ -8,7 +8,7 @@ Type:	Standards Track
 Created:	13-Jul-2000
 Python-Version:	2.0
 Post-History:	27-Jul-2000
-'''
+"""
 
 # Here are some examples, based on the reference implementation below:
 a = (1, 2, 3, 4)
@@ -17,30 +17,30 @@ c = (9, 10, 11)
 d = (12, 13)
 
 print(list(zip(a, b)))
-#[(1, 5), (2, 6), (3, 7), (4, 8)]
+# [(1, 5), (2, 6), (3, 7), (4, 8)]
 
 print(list(zip(a, d)))
-#[(1, 12), (2, 13)]
+# [(1, 12), (2, 13)]
 
 print(list(zip(a, b, c, d)))
-#[(1, 5, 9, 12), (2, 6, 10, 13)]
+# [(1, 5, 9, 12), (2, 6, 10, 13)]
 
 # Note that when the sequences are of the same length, zip() is reversible:
 a = (1, 2, 3)
 b = (4, 5, 6)
 x = list(zip(a, b))
-y = list(zip(*x)) # alternatively, apply(zip, x)
-z = list(zip(*y)) # alternatively, apply(zip, y)
+y = list(zip(*x))  # alternatively, apply(zip, x)
+z = list(zip(*y))  # alternatively, apply(zip, y)
 print(list(x))
-#[(1, 4), (2, 5), (3, 6)]
+# [(1, 4), (2, 5), (3, 6)]
 print(list(y))
-#[(1, 2, 3), (4, 5, 6)]
+# [(1, 2, 3), (4, 5, 6)]
 print(list(z))
-#[(1, 4), (2, 5), (3, 6)]
+# [(1, 4), (2, 5), (3, 6)]
 print(x == z)
-#True
+# True
 
-'''
+"""
 
 Reference Implementation
 
@@ -62,4 +62,4 @@ def zip(*args):
     except IndexError:
         return ret
 
-'''
+"""

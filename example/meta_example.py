@@ -1,4 +1,4 @@
-#https://www.python.org/dev/peps/pep-3115/
+# https://www.python.org/dev/peps/pep-3115/
 # The custom dictionary
 class member_table(dict):
     def __init__(self):
@@ -13,12 +13,12 @@ class member_table(dict):
         # Call superclass
         dict.__setitem__(self, key, value)
 
+
 # The metaclass
 class OrderedClass(type):
-
     # The prepare function
     @classmethod
-    def __prepare__(metacls, name, bases): # No keywords in this case
+    def __prepare__(metacls, name, bases):  # No keywords in this case
         return member_table()
 
     # The metaclass invocation
@@ -31,6 +31,7 @@ class OrderedClass(type):
         result.member_names = classdict.member_names
         return result
 
+
 class MyClass(metaclass=OrderedClass):
     # method1 goes in array element 0
     def method1(self):
@@ -39,5 +40,6 @@ class MyClass(metaclass=OrderedClass):
     # method2 goes in array element 1
     def method2(self):
         pass
+
 
 print(MyClass.__mro__)

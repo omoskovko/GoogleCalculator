@@ -33,9 +33,7 @@ class MyHookimpl(object):
             return val, gen
 
         args = gen_name.__code__.co_varnames[: gen_name.__code__.co_argcount]
-        res = {
-            v: self.__dict__[v] for v in self.__dict__ if v in args[len(arc) :]
-        }
+        res = {v: self.__dict__[v] for v in self.__dict__ if v in args[len(arc) :]}
 
         for f_name in [v for v in res if res[v] is None]:
             val, gen = self.__init_gen(self.func_regs[f_name][0])
@@ -132,7 +130,7 @@ test_wrap.stop_gen()
 print(my_next_test())
 test_wrap.stop_gen()
 
-'''
+"""
  @contextlib.contextmanager
 
     This function is a decorator that can be used to define a factory function for with statement context managers, 
@@ -143,30 +141,34 @@ test_wrap.stop_gen()
 
     The function being decorated must return a generator-iterator when called. 
     This iterator must yield exactly one value, which will be bound to the targets in the with statement's as clause, if any.
-'''
+"""
 
 import contextlib
 
+
 @contextlib.contextmanager
 def transaction():
-    print('begin')
+    print("begin")
     try:
         yield from do_it()
     except:
-        print('rollback')
+        print("rollback")
         raise
     else:
-        print('commit')
+        print("commit")
+
 
 def do_it():
-    print('Refactored initial setup')
-    yield # Body of with-statement is executed here
-    print('Refactored finalization of successful transaction')
+    print("Refactored initial setup")
+    yield  # Body of with-statement is executed here
+    print("Refactored finalization of successful transaction")
+
 
 def gene():
     for i in range(2):
         with transaction():
             yield i
 
+
 for i in gene():
-    print('main: i =', i)
+    print("main: i =", i)

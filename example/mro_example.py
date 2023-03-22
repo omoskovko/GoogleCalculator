@@ -1,11 +1,28 @@
-class F(object): pass
-class E(object): pass
-class D(object): pass
-class C(D,F): pass
-class B(D,E): pass
-class A(B,C): pass
+class F(object):
+    pass
 
-'''
+
+class E(object):
+    pass
+
+
+class D(object):
+    pass
+
+
+class C(D, F):
+    pass
+
+
+class B(D, E):
+    pass
+
+
+class A(B, C):
+    pass
+
+
+"""
 https://docs.python.org/3/tutorial/classes.html#multiple-inheritance
 9.5.1. Multiple Inheritance
 
@@ -114,15 +131,15 @@ MRO[A]=['A', 'B', 'C', 'D', 'E', 'F', 'O', 'object']
   class.__mro__
     This attribute is a tuple of classes that are considered when looking for base classes during method resolution.
     https://docs.python.org/3/library/stdtypes.html#class.__mro__
-'''
+"""
 print("=>".join([cls.__name__ for cls in A.__mro__]))
 
-''''
+"""'
 # Result is
 A=>B=>C=>D=>E=>F=>object
-'''
+"""
 
-'''
+"""
 I leave as an exercise for the reader to compute the linearization for my second example:
 
     >>> O = object
@@ -168,23 +185,42 @@ CPL[A]=[['A'], MRO[B], MRO[C], ['B', 'C']]
 MRO[A]=['A', 'B', 'E', 'C', 'D', 'F', 'O', 'object']
 
 It is enough to invoke the .mro() method of class A:
-'''
+"""
 
 O = object
-class F(O): pass
-class E(O): pass
-class D(O): pass
-class C(D,F): pass
-class B(E,D): pass
-class A(B,C): pass
+
+
+class F(O):
+    pass
+
+
+class E(O):
+    pass
+
+
+class D(O):
+    pass
+
+
+class C(D, F):
+    pass
+
+
+class B(E, D):
+    pass
+
+
+class A(B, C):
+    pass
+
 
 print("=>".join([cls.__name__ for cls in A.__mro__]))
-'''
+"""
 # Result is
 A=>B=>E=>C=>D=>F=>object
-'''
+"""
 
-'''
+"""
  The following example, originally provided by Samuele Pedroni, shows that the MRO of Python 2.2 is non-monotonic:
 
     >>> class A(object): pass
@@ -253,33 +289,89 @@ CPL[Z]=[['Z'], MRO[K1], MRO[K2], MRO[K3], ['K1', 'K2', 'K3']]
 ['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E', 'O', 'object']+=merge([])
 
 MRO[Z]=['Z', 'K1', 'K2', 'K3', 'D', 'A', 'B', 'C', 'E', 'O', 'object']
-'''
-class A(object): pass
-class B(object): pass
-class C(object): pass
-class D(object): pass
-class E(object): pass
-class K1(A,B,C): pass
-class K2(D,B,E): pass
-class K3(D,A):   pass
-class Z(K1,K2,K3): pass
+"""
+
+
+class A(object):
+    pass
+
+
+class B(object):
+    pass
+
+
+class C(object):
+    pass
+
+
+class D(object):
+    pass
+
+
+class E(object):
+    pass
+
+
+class K1(A, B, C):
+    pass
+
+
+class K2(D, B, E):
+    pass
+
+
+class K3(D, A):
+    pass
+
+
+class Z(K1, K2, K3):
+    pass
+
 
 print("=>".join([cls.__name__ for cls in Z.__mro__]))
-'''
+"""
 # Resulrt is
 Z=>K1=>K2=>K3=>D=>A=>B=>C=>E=>object
-'''
+"""
 
-class A(object): pass
-class B(object): pass
-class C(object): pass
-class D(object): pass
-class E(object): pass
-class K1(A,B,C): pass
-class K2(B,D,E): pass
-class K3(D,A):   pass
-class Z(K1,K2,K3): pass
-'''
+
+class A(object):
+    pass
+
+
+class B(object):
+    pass
+
+
+class C(object):
+    pass
+
+
+class D(object):
+    pass
+
+
+class E(object):
+    pass
+
+
+class K1(A, B, C):
+    pass
+
+
+class K2(B, D, E):
+    pass
+
+
+class K3(D, A):
+    pass
+
+
+class Z(K1, K2, K3):
+    pass
+
+
+"""
 # Result is
 Traceback (most recent call last):
   File "mro_example.py", line 222, in <module>
@@ -305,4 +397,4 @@ On this level error will be raised because:
    A in ['D', 'A', 'O', 'object']
    B in ['A', 'B', 'C', 'O', 'object']
    D in ['B', 'D', 'E', 'O', 'object']
-'''
+"""

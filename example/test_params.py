@@ -13,6 +13,7 @@ def test_x(request):
 def test_with_params(request):
     return request.param
 
+
 @pytest.fixture(scope="function")
 def y(request, test_with_params):
     return request.param * 2
@@ -22,4 +23,3 @@ def y(request, test_with_params):
 def test_indirect(test_x, y):
     assert y == "bb"
     assert test_x == "a"
-
