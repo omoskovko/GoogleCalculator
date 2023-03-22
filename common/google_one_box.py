@@ -12,12 +12,12 @@ class GoogleOneBox(BasePage):
     def __init__(self, driver, url):
         BasePage.__init__(self, driver)
 
-        #self._driver = driver
+        # self._driver = driver
         self._url = url
 
     def is_loaded(self):
         try:
-            self._driver.find_element_by_name("q")
+            self._driver.find_element(By.NAME, "q")
             return True
         except NoSuchElementException:
             return False
@@ -28,7 +28,7 @@ class GoogleOneBox(BasePage):
 
     @require_loaded
     def search_for(self, search_term):
-        element = self._driver.find_element_by_name("q")
+        element = self._driver.find_element(By.NAME, "q")
         element.send_keys(search_term)
         element.submit()
         return CalcPObject(self._driver)
