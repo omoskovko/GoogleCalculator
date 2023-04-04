@@ -67,7 +67,7 @@ def parse_html(html):
     #    <div data-template-name=3D"channel_invoice_v2"></div>
     # will be replaced like following
     #    <div data-template-name="channel_invoice_v2"></div>
-    decoded_html = quopri.decodestring(ascii_encoded_html).decode("utf-8")
+    decoded_html = quopri.decodestring(ascii_encoded_html).decode("utf-8", errors='replace')
     soup = BeautifulSoup(decoded_html, "lxml")
     target_div = soup.find("div", attrs={"data-template-name": "channel_invoice_v2"})
 
