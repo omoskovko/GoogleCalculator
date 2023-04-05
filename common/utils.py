@@ -19,6 +19,7 @@ def get_driver(use_headless, dProfile="Chrome"):
         from selenium.webdriver.firefox.options import Options
 
         options = Options()
-        options.headless = use_headless
+        if use_headless:
+            options.add_argument("--headless")
 
     return webDrivers[dProfile](options=options)
