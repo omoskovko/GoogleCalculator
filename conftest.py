@@ -35,7 +35,7 @@ def pytest_runtest_makereport(item, call):
     if rep.when == "call":
         xfail = hasattr(rep, "wasxfail")
         if xfail or rep.failed:
-            p = re.compile("(\:|\(|\)|\.)")
+            p = re.compile(r"(\:|\(|\)|\.)")
             # outPngFile = get_out_path(rep.nodeid.replace(":", "_").replace("(", "_").replace(")", "_").replace(".", "_")+".png")
             outPngFile = get_out_path(p.sub(":", rep.nodeid).split(":")[-1] + ".png")
             # print("Failed test is: "+outPngFile)
