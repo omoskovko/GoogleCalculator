@@ -72,7 +72,10 @@ def pytest_addoption(parser):
         "--headless", action="store_true", default=False, help="Use headless parameter"
     )
     parser.addoption(
-        "--session", action="store_true", default=False, help="Use headless parameter"
+        "--session",
+        action="store_true",
+        default=False,
+        help="Run fixture in session scope",
     )
 
 

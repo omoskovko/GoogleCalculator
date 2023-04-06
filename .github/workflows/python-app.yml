@@ -23,16 +23,13 @@ jobs:
     - name: Install dependencies
       run: |
         uname -p
-        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        sudo sh -c 'echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
+        sudo apt-get update
+        sudo apt-get install -y wget gnupg2 ca-certificates
+        sudo sh -c "wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome-archive-keyring.gpg"
+        sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/google-chrome-archive-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
         sudo apt-get -y update
-        sudo apt-get -y install firefox
         sudo apt-get -y install google-chrome-stable
         sudo apt-get -y install curl
-        wget $(curl -s 'https://api.github.com/repos/mozilla/geckodriver/releases/latest' | sed -n '/content_type/!b;:a;/browser_download_url/!{$!{N;ba}};{/application\/x\-gzip/p}'|sed -e 's/^[^:]*: *\"\(http[^\"]*\).*/\1/'|grep linux64)
-        tar -xvzf geckodriver*
-        chmod 755 geckodriver
-        sudo mv geckodriver /usr/bin/geckodriver
         wget https://chromedriver.storage.googleapis.com/$(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/bin/chromedriver
@@ -40,10 +37,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Run with Black
-      run: |
-        # Run black to formate files
-        black .
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -53,16 +46,16 @@ jobs:
     - name: Test with default pytest
       run: |
         pytest -v --headless
-    - name: Upload Firefox result
+    - name: Upload no session result
       uses: actions/upload-artifact@v2
       with:
-        name: firefox_output
+        name: no_session_output
         path: output.png/*.*
     - name: Test with pytest Chrome
       run: |
         pytest -v --driver=Chrome --headless --session
-    - name: Upload Chrome result
+    - name: Upload session result
       uses: actions/upload-artifact@v2
       with:
-        name: chrome_output
+        name: session_output
         path: output.png/*.*
