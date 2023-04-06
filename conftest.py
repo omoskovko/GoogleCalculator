@@ -63,7 +63,7 @@ def pytest_runtest_makereport(item, call):
 
 def pytest_addoption(parser):
     parser.addoption(
-        "--driver", action="store", default="Firefox", help="WEB Driver name"
+        "--driver", action="store", default="Chrome", help="WEB Driver name"
     )
     parser.addoption(
         "--testLoops", action="store", default=2, help="Count of suite loops"
