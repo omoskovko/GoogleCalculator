@@ -15,15 +15,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Build and test with Docker
       run: |
-        mkdir -p output.png
-        chmod 777 output.png
         docker build --build-arg USER_ID=$(id -u) -t google-calc .
-        docker run -u $(id -u) -v output.png:/home/uchrome/google_calc/output.png google-calc pytest -v --driver=Chrome --headless --session
-    - name: Upload no session result
-      uses: actions/upload-artifact@v2
+        mkdir -p output.png
+        chmod 777 ./output.png
+        docker run -u $(id -u) -v ./output.png:/home/uchrome/google_calc/output.png google-calc pytest -v --driver=Chrome --headless --session
+    - name: Upload pytest result
+      uses: actions/upload-artifact@v3
       with:
-        name: no_session_output
+        name: pytest_output
         path: output.png/*.*
