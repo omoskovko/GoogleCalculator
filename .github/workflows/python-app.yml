@@ -16,46 +16,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.10.6
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.10.6
-    - name: Install dependencies
+    - name: Build and test with Docker
       run: |
-        uname -p
-        sudo apt-get update
-        sudo apt-get install -y wget gnupg2 ca-certificates
-        sudo sh -c "wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome-archive-keyring.gpg"
-        sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/google-chrome-archive-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
-        sudo apt-get -y update
-        sudo apt-get -y install google-chrome-stable
-        sudo apt-get -y install curl
-        wget https://chromedriver.storage.googleapis.com/$(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip
-        sudo mv chromedriver /usr/bin/chromedriver
-        sudo chmod 755 /usr/bin/chromedriver
-        python -m pip install --upgrade pip
-        pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with default pytest
-      run: |
-        pytest -v --headless
+        mkdir -p output.png
+        chmod 777 output.png
+        docker build --build-arg USER_ID=$(id -u) -t google-calc .
+        docker run -u $(id -u) -v output.png:/home/uchrome/google_calc/output.png google-calc pytest -v --driver=Chrome --headless --session
     - name: Upload no session result
       uses: actions/upload-artifact@v2
       with:
         name: no_session_output
-        path: output.png/*.*
-    - name: Test with pytest Chrome
-      run: |
-        pytest -v --driver=Chrome --headless --session
-    - name: Upload session result
-      uses: actions/upload-artifact@v2
-      with:
-        name: session_output
         path: output.png/*.*

@@ -9,6 +9,14 @@ Pytest project with test cases for Google Calculator
 , [ChromeDriver](https://chromedriver.chromium.org/downloads)
 
 
+# Run with Docker
+```
+mkdir -p output.png
+chmod 777 output.png
+docker build --build-arg USER_ID=$(id -u) -t google-calc .
+docker run -u $(id -u) -v output.png:/home/uchrome/google_calc/output.png google-calc pytest -v --driver=Chrome --headless --session
+```
+
 # Installation Ubuntu
 ```
 sudo apt-get update
