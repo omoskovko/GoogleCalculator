@@ -1,0 +1,8 @@
+python-whois
+requests
+dnspython
+ipinfo
+# sudo apt install nmap
+python3-nmap
+# sudo apt-get install libpcap-dev
+scapy
