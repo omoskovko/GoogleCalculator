@@ -5,11 +5,11 @@ RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* 
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 ENV LANG en_US.utf8
 RUN apt-get update \
-    && apt-get install -y wget unzip gnupg2 ca-certificates libssl-dev python3 python3-pip
+    && apt-get install -y wget unzip gnupg2 ca-certificates libssl-dev python3 python3-pip python3-venv
 RUN sh -c "wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome-archive-keyring.gpg"
 RUN sh -c 'echo "deb [signed-by=/usr/share/keyrings/google-chrome-archive-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
 RUN apt-get update \
-    && apt-get -y install google-chrome-stable python3 python3-pip python3-venv
+    && apt-get -y install google-chrome-stable
 # RUN wget --no-verbose -O /tmp/chrome.deb http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_113.0.5672.92-1_amd64.deb \
 #     && apt install -y /tmp/chrome.deb \
 #     && rm /tmp/chrome.deb
@@ -26,9 +26,7 @@ WORKDIR /home/uchrome
 
 # Copy the requirements file into the container
 COPY requirements.txt .
-RUN python3 -m venv venv
-RUN . venv/bin/activate
-RUN pip3 install -r requirements.txt
+RUN python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt
 # ENV PATH="/home/uchrome/.local/bin:/usr/bin:$PATH"
 
 RUN mkdir -p google_calc

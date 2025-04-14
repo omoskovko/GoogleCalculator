@@ -1,4 +1,7 @@
-def recursive_compare(d1, d2, level="root"):
+def recursive_compare(d1, d2, level="root", ignore_list=None):
+    if ignore_list is None:
+        ignore_list = []
+
     res_list = []
     if isinstance(d1, dict) and isinstance(d2, dict):
         if d1.keys() != d2.keys():
@@ -10,18 +13,21 @@ def recursive_compare(d1, d2, level="root"):
             common_keys = set(d1.keys())
 
         for k in common_keys:
+            if k in ignore_list:
+                continue
+
             res_list += recursive_compare(
-                d1[k], d2[k], level="{0}.{1}".format(level, k)
+                d1[k], d2[k], level="{0}.{1}".format(level, k), ignore_list=ignore_list
             )
 
     elif isinstance(d1, list) and isinstance(d2, list):
-        if len(d1) > len(d2):
+        if len(d1) > len(d2) or len(d1) < len(d2):
             res_list.append("{0} len1={1}; len2={2}".format(level, len(d1), len(d2)))
         common_len = min(len(d1), len(d2))
 
         for i in range(common_len):
             res_list += recursive_compare(
-                d1[i], d2[i], level="{0}[{1}]".format(level, i)
+                d1[i], d2[i], level="{0}[{1}]".format(level, i), ignore_list=ignore_list
             )
 
     else:
